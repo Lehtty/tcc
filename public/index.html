@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MODEXA – Moda que move você</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../src/assets/styles/main.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="logo">MODE<span>XA</span></a>
+            <div class="nav-links">
+                <a href="#">Novidades</a>
+                <a href="#">Feminino</a>
+                <a href="#">Masculino</a>
+                <a href="#">Acessórios</a>
+            </div>
+            <div class="nav-actions">
+                <button onclick="showToast('Busca indisponível')">🔍</button>
+                <button onclick="openCart()" style="position:relative">
+                    🛍️ <span class="cart-badge" id="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-text">
+                <div class="hero-tag">✦ Nova Coleção 2026</div>
+                <h1>Vista o que<br>você <em>sente</em></h1>
+                <p class="hero-sub">Peças exclusivas com qualidade premium. O disfarce perfeito para o seu dia a dia.</p>
+                <div class="hero-ctas">
+                    <button class="btn-primary" onclick="scrollToProducts()">Explorar</button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-card">
+                    <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=500" alt="Moda">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="products">
+        <div class="section-header">
+            <h2 class="section-title">Destaques da <span>Semana</span></h2>
+        </div>
+        <div class="products-grid" id="products-grid"></div>
+    </section>
+
+    <div class="cart-overlay" id="cart-overlay" onclick="closeCartOutside(event)">
+        <div class="cart-sidebar">
+            <div class="cart-header">
+                <h3>Meu Carrinho</h3>
+                <button onclick="closeCart()">✕</button>
+            </div>
+            <div class="cart-items" id="cart-items"></div>
+            <div class="cart-footer">
+                <div class="cart-total">Total: <span id="cart-total">R$ 0,00</span></div>
+                <button class="btn-primary" style="width:100%" onclick="showToast('Processando...')">Finalizar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <!-- Scripts -->
+    <script src="../src/js/products.js"></script>
+    <script src="../src/js/steganography.js"></script>
+    <script src="../src/js/main.js"></script>
+</body>
+</html>
