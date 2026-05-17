@@ -1,7 +1,13 @@
 let cart = [];
 
-// 1. CONFIGURAÇÃO DOS TEMAS E LAYOUTS
 function applyRandomTheme() {
+    const cssFiles = ['../src/assets/styles/style_one.css', '../src/assets/styles/style_two.css', '../src/assets/styles/style_three.css'];
+    const selectedCss = cssFiles[Math.floor(Math.random() * cssFiles.length)];
+    const themeLink = document.getElementById('theme-style') || document.querySelector('link[href*="assets/styles/"]');
+    if (themeLink) {
+        themeLink.href = selectedCss;
+    }
+
     const themes = [
         { 
             name: 'Classic Rose',
@@ -22,7 +28,6 @@ function applyRandomTheme() {
 
     const selected = themes[Math.floor(Math.random() * themes.length)];
     
-    // Aplica as variáveis ao CSS
     const root = document.documentElement;
     root.style.setProperty('--rose', selected.colors.rose);
     root.style.setProperty('--cream', selected.colors.cream);
@@ -34,7 +39,6 @@ function applyRandomTheme() {
     console.log(`[TCC Camuflagem] Sistema carregado: ${selected.name}`);
 }
 
-// 2. FUNÇÃO PARA MOSTRAR OS PRODUTOS
 function renderProducts() {
     const grid = document.getElementById('products-grid');
     if (!grid) {
@@ -42,7 +46,6 @@ function renderProducts() {
         return;
     }
 
-    // Verifica se a variável 'products' (do ficheiro products.js) existe
     if (typeof products === 'undefined') {
         console.error("Erro: A variável 'products' não foi carregada. Verifique se o ficheiro products.js está correto.");
         grid.innerHTML = "<p>Erro ao carregar produtos.</p>";
@@ -61,7 +64,6 @@ function renderProducts() {
     `).join('');
 }
 
-// 3. LÓGICA DO CARRINHO
 function addToCart(id) {
     const p = products.find(x => x.id === id);
     cart.push(p);
@@ -87,7 +89,6 @@ function updateCart() {
     }
 }
 
-// 4. UTILITÁRIOS DE INTERFACE
 function openCart() { document.getElementById('cart-overlay').classList.add('open'); }
 function closeCart() { document.getElementById('cart-overlay').classList.remove('open'); }
 function closeCartOutside(e) { if (e.target.id === 'cart-overlay') closeCart(); }
@@ -106,7 +107,6 @@ function scrollToProducts() {
     if(target) target.scrollIntoView({ behavior: 'smooth' });
 }
 
-// 5. INICIALIZAÇÃO
 document.addEventListener('DOMContentLoaded', () => {
     applyRandomTheme();
     renderProducts();

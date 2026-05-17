@@ -7,7 +7,6 @@ if(logo) {
     logo.addEventListener('mousedown', () => {
         pressTimer = window.setTimeout(() => {
             alert('Protocolo de Segurança Ativado: Iniciando formulário camuflado.');
-            // Aqui entraria a lógica de trocar o conteúdo do site em memória
         }, 3000);
     });
     logo.addEventListener('mouseup', () => clearTimeout(pressTimer));

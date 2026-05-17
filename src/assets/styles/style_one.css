@@ -28,7 +28,6 @@ body {
     transition: background 0.5s ease, color 0.5s ease;
 }
 
-/* --- NAVEGAÇÃO --- */
 nav {
     background: var(--white);
     border-bottom: 1px solid var(--border);
@@ -103,7 +102,6 @@ nav {
     border-radius: 50%;
 }
 
-/* --- HERO SECTION --- */
 .hero {
     padding: 80px 2rem;
     display: flex;
@@ -138,12 +136,11 @@ nav {
 
 .hero-visual img {
     width: 100%;
-    border-radius: var(--radius); /* Arredondamento Dinâmico */
+    border-radius: var(--radius);
     box-shadow: 0 20px 40px rgba(0,0,0,0.1);
     transition: border-radius 0.5s ease;
 }
 
-/* --- PRODUTOS --- */
 .section {
     padding: 60px 2rem;
     max-width: 1200px;
@@ -170,7 +167,7 @@ nav {
 .product-card {
     background: var(--white);
     padding: 15px;
-    border-radius: var(--radius); /* Dinâmico */
+    border-radius: var(--radius);
     border: 1px solid var(--border);
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-radius 0.5s ease;
     cursor: pointer;
@@ -184,7 +181,7 @@ nav {
 .product-card img {
     width: 100%;
     border-radius: calc(var(--radius) / 2);
-    aspect-ratio: var(--img-ratio); /* Proporção Dinâmica */
+    aspect-ratio: var(--img-ratio);
     object-fit: cover;
     margin-bottom: 15px;
     transition: aspect-ratio 0.5s ease;
@@ -203,7 +200,6 @@ nav {
     font-size: 1.1rem;
 }
 
-/* --- BOTÕES --- */
 .btn-primary {
     background: var(--black);
     color: var(--white);
@@ -221,7 +217,6 @@ nav {
     transform: scale(1.02);
 }
 
-/* --- CARRINHO --- */
 .cart-overlay {
     position: fixed;
     inset: 0;
@@ -259,7 +254,6 @@ nav {
     padding-bottom: 15px;
 }
 
-/* --- TOAST --- */
 .toast {
     position: fixed;
     bottom: 30px;
