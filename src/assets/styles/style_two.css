@@ -449,3 +449,88 @@ nav {
     color: var(--ember);
     letter-spacing: 0;
 }
+
+
+.filter-btn {
+    font-family: var(--font-mono) !important;
+    border-radius: 0px !important;
+    border: 1px solid var(--border) !important;
+    background: var(--chalk) !important;
+    color: var(--ink) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    font-size: 10px !important;
+    padding: 10px 20px !important;
+    transition: all 0.3s ease !important;
+}
+.filter-btn.active, .filter-btn:hover {
+    background: var(--ink) !important;
+    color: var(--chalk) !important;
+    border-color: var(--ink) !important;
+}
+.sort-select {
+    font-family: var(--font-mono) !important;
+    border-radius: 0px !important;
+    border: 1px solid var(--border) !important;
+    font-size: 10px !important;
+    text-transform: uppercase !important;
+}
+.size-option {
+    font-family: var(--font-mono) !important;
+    border-radius: 0px !important;
+    border: 1px solid var(--border) !important;
+    background: var(--white) !important;
+    color: var(--ink) !important;
+    font-size: 11px !important;
+    transition: all 0.2s ease !important;
+}
+.size-option.selected {
+    background: var(--ink) !important;
+    color: var(--chalk) !important;
+    border-color: var(--ink) !important;
+}
+.quantity-selector {
+    border-radius: 0px !important;
+    border: 1px solid var(--border) !important;
+    background: var(--white) !important;
+}
+.quantity-btn {
+    font-family: var(--font-mono) !important;
+    color: var(--ink) !important;
+}
+.quantity-btn:hover {
+    background: var(--pale-ember) !important;
+}
+.product-detail-layout {
+    background: var(--chalk) !important;
+    border: none !important;
+}
+.product-title {
+    font-family: var(--font-serif) !important;
+    font-weight: 300 !important;
+}
+
+.nav-actions button.search-btn .icon-txt, 
+.nav-actions button.cart-btn .icon-txt {
+    display: none !important;
+}
+.nav-actions button.search-btn::before {
+    content: "BUSCA" !important;
+    font-family: var(--font-mono) !important;
+    font-size: 10px !important;
+    letter-spacing: 1px !important;
+}
+.nav-actions button.cart-btn::before {
+    content: "SACOLA" !important;
+    font-family: var(--font-mono) !important;
+    font-size: 10px !important;
+    letter-spacing: 1px !important;
+    margin-right: 4px !important;
+}
+
+.cart-overlay {
+    pointer-events: none !important;
+}
+.cart-overlay.open {
+    pointer-events: auto !important;
+}

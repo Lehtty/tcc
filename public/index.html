@@ -7,20 +7,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link id="theme-style" rel="stylesheet" href="../src/assets/styles/style_one.css">
 </head>
-<body>
+<body style="opacity: 0; transition: opacity 0.15s ease;">
     <nav>
         <div class="nav-inner">
-            <a href="#" class="logo">MODE<span>XA</span></a>
+            <a href="index.html" class="logo">MODE<span>XA</span></a>
             <div class="nav-links">
-                <a href="#">Novidades</a>
-                <a href="#">Feminino</a>
-                <a href="#">Masculino</a>
-                <a href="#">Acessórios</a>
+                <a href="index.html">Início</a>
+                <a href="products.html">Produtos</a>
+                <a href="products.html?category=Feminino">Feminino</a>
+                <a href="products.html?category=Masculino">Masculino</a>
             </div>
             <div class="nav-actions">
-                <button onclick="showToast('Busca indisponível')">🔍</button>
-                <button onclick="openCart()" style="position:relative">
-                    🛍️ <span class="cart-badge" id="cart-count">0</span>
+                <button class="search-btn" onclick="showToast('Busca indisponível')"><span class="icon-txt">🔍</span></button>
+                <button class="cart-btn" onclick="openCart()" style="position:relative">
+                    <span class="icon-txt">🛍️</span><span class="cart-badge" id="cart-count">0</span>
                 </button>
             </div>
         </div>
@@ -64,9 +64,7 @@
             </div>
         </div>
     </div>
-
     <div class="toast" id="toast"></div>
-
     <script src="../src/js/products.js"></script>
     <script src="../src/js/steganography.js"></script>
     <script src="../src/js/main.js"></script>

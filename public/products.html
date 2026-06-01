@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Completo – MODEXA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link id="theme-style" rel="stylesheet" href="../src/assets/styles/style_one.css">
+    <style>
+        .page-header-container {
+            max-width: 1200px;
+            margin: 40px auto 20px;
+            padding: 0 2rem;
+        }
+        .breadcrumb {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        .breadcrumb a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: var(--rose);
+        }
+        .filter-section {
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            border-bottom: 1px solid var(--border, #eee);
+            padding-bottom: 20px;
+        }
+        .category-filters {
+            display: flex;
+            gap: 10px;
+        }
+        .filter-btn {
+            background: var(--cream);
+            color: var(--black);
+            border: 1px solid var(--border, #ddd);
+            padding: 8px 18px;
+            border-radius: var(--radius);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--black);
+            color: var(--white, #fff);
+            border-color: var(--black);
+        }
+        .sort-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .sort-container label {
+            font-size: 0.85rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+        .sort-select {
+            background: var(--white, #fff);
+            color: var(--black);
+            border: 1px solid var(--border, #ddd);
+            padding: 8px 12px;
+            border-radius: var(--radius);
+            font-size: 0.85rem;
+            outline: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .prod-badge-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 5;
+        }
+        .prod-badge {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 4px 8px;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+        .prod-badge.sale { background: var(--rose); }
+        .prod-badge.new { background: #aaf0cb; color: #111; }
+        .prod-badge.hot { background: #ff2b2b; }
+        .product-card {
+            position: relative;
+        }
+    </style>
+</head>
+<body style="opacity: 0; transition: opacity 0.15s ease;">
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="logo">MODE<span>XA</span></a>
+            <div class="nav-links">
+                <a href="index.html">Início</a>
+                <a href="products.html" style="color: var(--rose); font-weight: 600;">Produtos</a>
+                <a href="products.html?category=Feminino">Feminino</a>
+                <a href="products.html?category=Masculino">Masculino</a>
+            </div>
+            <div class="nav-actions">
+                <button class="search-btn" onclick="showToast('Busca indisponível')"><span class="icon-txt">🔍</span></button>
+                <button class="cart-btn" onclick="openCart()" style="position:relative">
+                    <span class="icon-txt">🛍️</span><span class="cart-badge" id="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header-container">
+        <div class="breadcrumb">
+            <a href="index.html">Início</a> / <span>Produtos</span>
+        </div>
+        <h2 style="font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-top: 10px;">
+            Coleção <span>Completa</span>
+        </h2>
+    </div>
+
+    <div class="filter-section">
+        <div class="category-filters" id="category-filters">
+            <button class="filter-btn active" onclick="setCategory('Todos')">Todos</button>
+            <button class="filter-btn" onclick="setCategory('Feminino')">Feminino</button>
+            <button class="filter-btn" onclick="setCategory('Masculino')">Masculino</button>
+        </div>
+        <div class="sort-container">
+            <label for="sort-select">Ordenar por:</label>
+            <select id="sort-select" class="sort-select" onchange="setSort(this.value)">
+                <option value="default">Destaques</option>
+                <option value="low-high">Preço: Menor para Maior</option>
+                <option value="high-low">Preço: Maior para Menor</option>
+            </select>
+        </div>
+    </div>
+
+    <section class="section" style="padding-top: 0;">
+        <div class="products-grid" id="products-grid"></div>
+    </section>
+
+    <div class="cart-overlay" id="cart-overlay" onclick="closeCartOutside(event)">
+        <div class="cart-sidebar">
+            <div class="cart-header">
+                <h3>Meu Carrinho</h3>
+                <button onclick="closeCart()">✕</button>
+            </div>
+            <div class="cart-items" id="cart-items"></div>
+            <div class="cart-footer">
+                <div class="cart-total">Total: <span id="cart-total">R$ 0,00</span></div>
+                <button class="btn-primary" style="width:100%" onclick="showToast('Processando...')">Finalizar Compra</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="../src/js/products.js"></script>
+    <script src="../src/js/steganography.js"></script>
+    <script src="../src/js/main.js"></script>
+    
+    <script>
+        let currentCategory = 'Todos';
+        let currentSort = 'default';
+
+        function parseUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            const categoryParam = params.get('category');
+            if (categoryParam) {
+                currentCategory = categoryParam;
+                updateFilterButtons();
+            }
+        }
+
+        function updateFilterButtons() {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => {
+                if (btn.textContent.trim() === currentCategory) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        function setCategory(category) {
+            currentCategory = category;
+            
+            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?category=' + encodeURIComponent(category);
+            window.history.pushState({path: newUrl}, '', newUrl);
+            
+            updateFilterButtons();
+            filterAndRender();
+        }
+
+        function setSort(sortValue) {
+            currentSort = sortValue;
+            filterAndRender();
+        }
+
+        function filterAndRender() {
+            let filtered = products;
+            
+            if (currentCategory !== 'Todos') {
+                filtered = products.filter(p => p.category === currentCategory);
+            }
+            
+            if (currentSort === 'low-high') {
+                filtered = [...filtered].sort((a, b) => a.price - b.price);
+            } else if (currentSort === 'high-low') {
+                filtered = [...filtered].sort((a, b) => b.price - a.price);
+            }
+            
+            const grid = document.getElementById('products-grid');
+            if (!grid) return;
+            
+            if (filtered.length === 0) {
+                grid.innerHTML = `<p style="text-align:center; grid-column: 1/-1; padding: 60px; color: var(--gray); font-size:1.1rem;">Nenhum produto encontrado nesta categoria.</p>`;
+                return;
+            }
+            
+            grid.innerHTML = filtered.map(p => `
+                <div class="product-card" onclick="goToProductDetail(${p.id})">
+                    <div class="prod-badge-container">
+                        ${p.badge ? `<span class="prod-badge ${p.badge.toLowerCase()}">${p.badge}</span>` : ''}
+                    </div>
+                    <img src="${p.img}" alt="${p.name}">
+                    <span class="prod-name">${p.name}</span>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+                        <span class="prod-price">R$ ${p.price.toFixed(2).replace('.', ',')}</span>
+                        ${p.old ? `<span class="prod-old-price" style="text-decoration:line-through; font-size:0.85em; color:var(--gray);">R$ ${p.old.toFixed(2).replace('.', ',')}</span>` : ''}
+                    </div>
+                    <button class="btn-primary" style="margin-top:15px; width:100%" onclick="event.stopPropagation(); addToCart(${p.id})">
+                        Adicionar
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            parseUrlParams();
+            filterAndRender();
+        });
+    </script>
+</body>
+</html>

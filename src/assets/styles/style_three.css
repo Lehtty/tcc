@@ -533,3 +533,113 @@ nav {
     color: var(--black);
     letter-spacing: -1px;
 }
+
+
+.filter-btn {
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    font-size: 0.9rem !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
+    border-radius: 0px !important;
+    border: var(--border-w) solid var(--black) !important;
+    background: var(--white) !important;
+    color: var(--black) !important;
+    cursor: crosshair !important;
+    padding: 10px 22px !important;
+    transition: background 0.15s, transform 0.1s !important;
+}
+.filter-btn.active, .filter-btn:hover {
+    background: var(--lime) !important;
+    color: var(--black) !important;
+    transform: translate(-2px, -2px) !important;
+    box-shadow: 4px 4px 0 var(--black) !important;
+}
+.sort-select {
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    border-radius: 0px !important;
+    border: var(--border-w) solid var(--black) !important;
+    cursor: crosshair !important;
+    padding: 8px 12px !important;
+    background: var(--white) !important;
+    color: var(--black) !important;
+}
+.size-option {
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    border-radius: 0px !important;
+    border: var(--border-w) solid var(--black) !important;
+    background: var(--white) !important;
+    color: var(--black) !important;
+    cursor: crosshair !important;
+    transition: background 0.15s, transform 0.1s !important;
+}
+.size-option.selected {
+    background: var(--lime) !important;
+    color: var(--black) !important;
+    transform: translate(-2px, -2px) !important;
+    box-shadow: 3px 3px 0 var(--black) !important;
+}
+.size-option:hover {
+    background: var(--offwhite) !important;
+}
+.quantity-selector {
+    border-radius: 0px !important;
+    border: var(--border-w) solid var(--black) !important;
+    background: var(--white) !important;
+}
+.quantity-btn {
+    font-family: var(--font-display) !important;
+    font-weight: 900 !important;
+    color: var(--black) !important;
+    cursor: crosshair !important;
+}
+.quantity-btn:hover {
+    background: var(--lime) !important;
+}
+.product-detail-layout {
+    background: var(--white) !important;
+    padding: 40px !important;
+    border: var(--border-w) solid var(--black) !important;
+}
+.product-title {
+    font-family: var(--font-display) !important;
+    font-weight: 900 !important;
+    font-style: italic !important;
+    text-transform: uppercase !important;
+    letter-spacing: -1px !important;
+}
+
+.nav-actions button {
+    width: auto !important;
+    padding: 0 15px !important;
+}
+.nav-actions button.search-btn .icon-txt, 
+.nav-actions button.cart-btn .icon-txt {
+    display: none !important;
+}
+.nav-actions button.search-btn::before {
+    content: "BUSCA" !important;
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    font-size: 0.9rem !important;
+    letter-spacing: 1px !important;
+}
+.nav-actions button.cart-btn::before {
+    content: "CARRINHO" !important;
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    font-size: 0.9rem !important;
+    letter-spacing: 1px !important;
+    margin-right: 4px !important;
+}
+
+.cart-overlay {
+    pointer-events: none !important;
+}
+.cart-overlay.open {
+    pointer-events: auto !important;
+}

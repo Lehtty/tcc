@@ -29,7 +29,7 @@ body {
 }
 
 nav {
-    background: var(--white);
+    background: var(--cream);
     border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
@@ -165,7 +165,7 @@ nav {
 }
 
 .product-card {
-    background: var(--white);
+    background: var(--cream);
     padding: 15px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
@@ -202,7 +202,7 @@ nav {
 
 .btn-primary {
     background: var(--black);
-    color: var(--white);
+    color: var(--cream);
     border: none;
     padding: 14px 28px;
     border-radius: var(--radius);
@@ -238,7 +238,7 @@ nav {
     top: 0;
     height: 100%;
     width: 380px;
-    background: var(--white);
+    background: var(--cream);
     padding: 30px;
     display: flex;
     flex-direction: column;
@@ -260,7 +260,7 @@ nav {
     left: 50%;
     transform: translateX(-50%);
     background: var(--black);
-    color: var(--white);
+    color: var(--cream);
     padding: 12px 25px;
     border-radius: 50px;
     font-size: 0.9rem;
@@ -273,3 +273,66 @@ nav {
 .toast.show {
     opacity: 1;
 }
+
+
+.filter-btn {
+    border-radius: var(--radius) !important;
+    border: 1px solid var(--border) !important;
+    background: var(--cream) !important;
+    color: var(--black) !important;
+    transition: all 0.3s ease !important;
+}
+.filter-btn.active, .filter-btn:hover {
+    background: var(--rose) !important;
+    color: white !important;
+    border-color: var(--rose) !important;
+}
+.sort-select {
+    border-radius: var(--radius) !important;
+    border: 1px solid var(--border) !important;
+}
+.size-option {
+    border-radius: var(--radius) !important;
+    border: 1px solid var(--border) !important;
+    background: var(--cream) !important;
+    color: var(--black) !important;
+    transition: all 0.2s ease !important;
+}
+.size-option.selected {
+    background: var(--rose) !important;
+    color: white !important;
+    border-color: var(--rose) !important;
+}
+.quantity-selector {
+    border-radius: var(--radius) !important;
+    border: 1px solid var(--border) !important;
+}
+.quantity-btn:hover {
+    background: rgba(196, 112, 90, 0.1) !important;
+}
+.product-detail-layout {
+    background: var(--cream) !important;
+    padding: 30px !important;
+    border-radius: var(--radius) !important;
+    border: 1px solid var(--border) !important;
+}
+
+.nav-actions button.search-btn .icon-txt, 
+.nav-actions button.cart-btn .icon-txt {
+    display: none !important;
+}
+.nav-actions button.search-btn::before {
+    content: "⌕" !important;
+    font-size: 1.4rem !important;
+}
+.nav-actions button.cart-btn::before {
+    content: "🛍" !important;
+    font-size: 1.2rem !important;
+}
+
+.cart-overlay {
+    pointer-events: none !important;
+}
+.cart-overlay.open {
+    pointer-events: auto !important;
+}
