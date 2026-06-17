@@ -105,7 +105,7 @@
 <body style="opacity: 0; transition: opacity 0.15s ease;">
     <nav>
         <div class="nav-inner">
-            <a href="index.html" class="logo">MODE<span>XA</span></a>
+            <a href="index.html" class="logo" id="shop-logo">MODE<span>XA</span></a>
             <div class="nav-links">
                 <a href="index.html">Início</a>
                 <a href="products.html" style="color: var(--rose); font-weight: 600;">Produtos</a>
@@ -159,7 +159,7 @@
             <div class="cart-items" id="cart-items"></div>
             <div class="cart-footer">
                 <div class="cart-total">Total: <span id="cart-total">R$ 0,00</span></div>
-                <button class="btn-primary" style="width:100%" onclick="showToast('Processando...')">Finalizar Compra</button>
+                <button class="btn-primary" style="width:100%" onclick="checkoutCart()">Finalizar Compra</button>
             </div>
         </div>
     </div>
@@ -167,6 +167,8 @@
     <div class="toast" id="toast"></div>
 
     <script src="../src/js/products.js"></script>
+    <script src="../src/js/cart.js"></script>
+    <script src="../src/js/security.js"></script>
     <script src="../src/js/steganography.js"></script>
     <script src="../src/js/main.js"></script>
     

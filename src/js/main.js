@@ -1,5 +1,3 @@
-let cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
-
 function applyRandomTheme() {
     const cssFiles = [
         '../src/assets/styles/style_one.css',
@@ -62,7 +60,6 @@ function applyRandomTheme() {
     }
 
     const selected = themes[parseInt(themeIndex)];
-    
     const root = document.documentElement;
     root.style.setProperty('--rose', selected.colors.rose);
     root.style.setProperty('--cream', selected.colors.cream);
@@ -70,15 +67,11 @@ function applyRandomTheme() {
     root.style.setProperty('--nav-height', selected.layout.navHeight);
     root.style.setProperty('--radius', selected.layout.radius);
     root.style.setProperty('--img-ratio', selected.layout.ratio);
-
-    console.log(`[TCC Camuflagem] Sistema carregado: ${selected.name} (${selectedCss.split('/').pop()})`);
 }
 
 function renderProducts() {
     const grid = document.getElementById('products-grid');
-    if (!grid) {
-        return;
-    }
+    if (!grid) return;
 
     if (typeof products === 'undefined') {
         console.error("Erro: A variável 'products' não foi carregada. Verifique se o ficheiro products.js está correto.");
@@ -102,64 +95,6 @@ function goToProductDetail(id) {
     window.location.href = `product.html?id=${id}`;
 }
 
-function addToCart(id) {
-    if (typeof products === 'undefined') return;
-    const p = products.find(x => x.id === id);
-    if (!p) return;
-    
-    cart.push(p);
-    updateCart();
-    showToast(`${p.name} adicionado!`);
-}
-
-function updateCart() {
-    sessionStorage.setItem('cart', JSON.stringify(cart));
-
-    const badge = document.getElementById('cart-count');
-    if (badge) badge.textContent = cart.length;
-    
-    const total = cart.reduce((s, i) => s + i.price, 0);
-    const totalElem = document.getElementById('cart-total');
-    if (totalElem) totalElem.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
-    
-    const container = document.getElementById('cart-items');
-    if (container) {
-        if (cart.length === 0) {
-            container.innerHTML = `<div style="text-align:center;color:var(--gray);margin-top:20px;">Carrinho vazio</div>`;
-        } else {
-            container.innerHTML = cart.map((i, index) => `
-                <div class="cart-item-row" style="margin-bottom:12px; border-bottom:1px solid var(--border, #eee); padding-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
-                    <div style="flex:1; padding-right:10px;">
-                        <span style="font-weight:600; display:block;">${i.name}</span>
-                        <strong style="color:var(--rose);">R$ ${i.price.toFixed(2).replace('.', ',')}</strong>
-                    </div>
-                    <button onclick="removeFromCart(${index})" style="background:none; border:none; color:var(--red, #ff2b2b); font-size:1.1rem; cursor:pointer;">✕</button>
-                </div>
-            `).join('');
-        }
-    }
-}
-
-function removeFromCart(index) {
-    cart.splice(index, 1);
-    updateCart();
-    showToast('Item removido!');
-}
-
-function openCart() { 
-    const overlay = document.getElementById('cart-overlay');
-    if (overlay) overlay.classList.add('open'); 
-}
-
-function closeCart() { 
-    const overlay = document.getElementById('cart-overlay');
-    if (overlay) overlay.classList.remove('open'); 
-}
-
-function closeCartOutside(e) { 
-    if (e.target.id === 'cart-overlay') closeCart(); 
-}
-
 function showToast(msg) {
     const t = document.getElementById('toast');
     if (t) {
@@ -180,7 +115,9 @@ function scrollToProducts() {
 
 document.addEventListener('DOMContentLoaded', () => {
     renderProducts();
-    updateCart();
+    if (typeof updateCart === 'function') {
+        updateCart();
+    }
     const logo = document.querySelector('.logo');
     if (logo) {
         logo.addEventListener('click', (e) => {

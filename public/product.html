@@ -204,7 +204,7 @@
 <body style="opacity: 0; transition: opacity 0.15s ease;">
     <nav>
         <div class="nav-inner">
-            <a href="index.html" class="logo">MODE<span>XA</span></a>
+            <a href="index.html" class="logo" id="shop-logo">MODE<span>XA</span></a>
             <div class="nav-links">
                 <a href="index.html">Início</a>
                 <a href="products.html">Produtos</a>
@@ -233,7 +233,7 @@
             <div class="cart-items" id="cart-items"></div>
             <div class="cart-footer">
                 <div class="cart-total">Total: <span id="cart-total">R$ 0,00</span></div>
-                <button class="btn-primary" style="width:100%" onclick="showToast('Processando...')">Finalizar Compra</button>
+                <button class="btn-primary" style="width:100%" onclick="checkoutCart()">Finalizar Compra</button>
             </div>
         </div>
     </div>
@@ -241,6 +241,8 @@
     <div class="toast" id="toast"></div>
 
     <script src="../src/js/products.js"></script>
+    <script src="../src/js/cart.js"></script>
+    <script src="../src/js/security.js"></script>
     <script src="../src/js/steganography.js"></script>
     <script src="../src/js/main.js"></script>
     
@@ -272,6 +274,10 @@
             if (product.sizes && product.sizes.length > 0) selectedSize = product.sizes[0];
 
             renderDetail(container);
+
+            if (typeof window.updateAppState === 'function') {
+                window.updateAppState(selectedColor, selectedSize, quantity);
+            }
         }
 
         function showError(msg) {
@@ -368,25 +374,32 @@
                 }
             });
             updateColorNameLabel();
+            if (typeof window.updateAppState === 'function') {
+                window.updateAppState(selectedColor, selectedSize, quantity);
+            }
         }
 
         function updateColorNameLabel() {
             const label = document.getElementById('selected-color-name');
             if (label) {
-                const names = {
-                    '#f5c4b3': 'Pêssego Suave',
-                    '#aaf0cb': 'Verde Menta',
-                    '#b5d4f4': 'Azul Céu',
-                    '#fff': 'Branco Clássico',
-                    '#2c2c2a': 'Preto Editorial',
-                    '#c4705a': 'Rosa Classic',
-                    '#6080a0': 'Azul Denim',
-                    '#f5e6e0': 'Areia Natural',
-                    '#f5ece8': 'Off-White Nobre',
-                    '#80a080': 'Verde Oliva',
-                    '#888': 'Cinza Urbano'
-                };
-                label.textContent = names[selectedColor] || selectedColor;
+                if (window.showThreatLevels && typeof window.mapColorToDanger === 'function') {
+                    label.textContent = window.mapColorToDanger(selectedColor);
+                } else {
+                    const names = {
+                        '#f5c4b3': 'Pêssego Suave',
+                        '#aaf0cb': 'Verde Menta',
+                        '#b5d4f4': 'Azul Céu',
+                        '#fff': 'Branco Clássico',
+                        '#2c2c2a': 'Preto Editorial',
+                        '#c4705a': 'Rosa Classic',
+                        '#6080a0': 'Azul Denim',
+                        '#f5e6e0': 'Areia Natural',
+                        '#f5ece8': 'Off-White Nobre',
+                        '#80a080': 'Verde Oliva',
+                        '#888': 'Cinza Urbano'
+                    };
+                    label.textContent = names[selectedColor] || selectedColor;
+                }
             }
         }
 
@@ -400,6 +413,9 @@
                     opt.classList.remove('selected');
                 }
             });
+            if (typeof window.updateAppState === 'function') {
+                window.updateAppState(selectedColor, selectedSize, quantity);
+            }
         }
 
         function updateQty(val) {
@@ -407,6 +423,9 @@
             if (quantity < 1) quantity = 1;
             const qtyVal = document.getElementById('qty-val');
             if (qtyVal) qtyVal.textContent = quantity;
+            if (typeof window.updateAppState === 'function') {
+                window.updateAppState(selectedColor, selectedSize, quantity);
+            }
         }
 
         function buyProduct() {
