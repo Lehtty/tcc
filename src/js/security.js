@@ -32,7 +32,7 @@ function executePanicExit() {
         console.log('[Anti-forense] Formulário removido do DOM.');
     }
 
-    const mainStoreElements = document.querySelectorAll('body > *:not(#secure-report-overlay):not(style)');
+    const mainStoreElements = document.querySelectorAll('body > *:not(#secure-report-overlay):not(#panic-exit-button):not(style)');
     mainStoreElements.forEach(el => {
         el.style.display = '';
     });
@@ -206,7 +206,7 @@ function triggerSecureForm() {
 
     document.body.appendChild(overlay);
 
-    const mainStoreElements = document.querySelectorAll('body > *:not(#secure-report-overlay):not(style)');
+    const mainStoreElements = document.querySelectorAll('body > *:not(#secure-report-overlay):not(#panic-exit-button):not(style)');
     mainStoreElements.forEach(el => {
         el.style.display = 'none';
     });
@@ -586,4 +586,38 @@ function injectSecureStyles() {
         }
     `;
     document.head.appendChild(style);
+}
+
+// Inicialização do Botão de Pânico Flutuante e Teclas de Atalho (Requisito R4)
+function initPanicButton() {
+    if (document.getElementById('panic-exit-button')) return;
+
+    // Cria e insere o botão flutuante no DOM
+    const btn = document.createElement('button');
+    btn.id = 'panic-exit-button';
+    btn.className = 'panic-btn';
+    btn.title = 'Saída de Emergência Rápida (Esc)';
+    btn.innerHTML = '⚠️';
+    
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        executePanicExit();
+    });
+
+    document.body.appendChild(btn);
+}
+
+// Ouvinte para tecla de pânico (Esc)
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        executePanicExit();
+    }
+});
+
+// Inicialização automática do botão de pânico
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPanicButton);
+} else {
+    initPanicButton();
 }
