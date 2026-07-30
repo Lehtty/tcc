@@ -118,8 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof updateCart === 'function') {
         updateCart();
     }
-    const logo = document.querySelector('.logo');
-    if (logo) {
+    const logos = document.querySelectorAll('.logo');
+    logos.forEach(logo => {
         logo.addEventListener('click', (e) => {
             e.preventDefault();
         });
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sessionStorage.removeItem('selectedThemeIndex');
             window.location.reload();
         });
-    }
+    });
 });
 
 applyRandomTheme();

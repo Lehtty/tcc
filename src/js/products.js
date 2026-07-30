@@ -1,106 +1,196 @@
 const products = [
   {
     id: 1,
-    name: 'Vestido Floral Verão',
-    brand: 'MODEXA',
-    price: 89.90,
-    old: 149.90,
+    name: 'Moletom feminino com capuz fofo',
+    price: 33.90,
+    old: 129.90,
     badge: 'Sale',
-    colors: ['#f5c4b3', '#aaf0cb', '#b5d4f4'],
+    colors: ['#000000', '#8f8f8f', '#ffffff'],
+    colorsName: ['Preto', 'Cinza', 'Branco'],
     sizes: ['P', 'M', 'G'],
     category: 'Feminino',
-    description: 'Um vestido leve, fluido e romântico. Com estampa floral delicada e caimento perfeito, é a escolha ideal para dias quentes e ensolarados, proporcionando conforto absoluto e elegância sutil.',
-    img: 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&q=80'
+    description: 'Moleton feminino com capuz flanelado cangurú confortavél desenho coração fofo casual',
+    img: '../src/assets/images/moletom_fofo_1.png',
+    imgs: [
+      '../src/assets/images/moletom_fofo_1.png',
+      '../src/assets/images/moletom_fofo_2.png'
+    ],
+    panicUrl: 'https://br.shein.com/Women-s-Flannel-Kangaroo-Hoodie-Comfortable-Cute-Heart-Design-Casual-Sweatshirt-p-87852194.html?src_module=all&src_identifier=on=PRODUCT_ITEMS_COMPONENT`cn=infoflow`hz=0`ps=4_1_0`jc=itemPicking_00301507&src_tab_page_id=page_home1784666846406&mallCode=2&detailBusinessFrom=0-2&_gl=1*1t8sovx*_up*MQ..*_gs*MQ..',
+    panicFallbackUrl: 'https://br.shein.com/Women-Clothing-c-2030.html?entranceType=sbc&fromPageType=home&src_module=all&src_identifier=on%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&src_tab_page_id=page_home1785424022156&ici=CCCSN%3Dall_ON%3DCATEGORY_RECOMMEND_COMPONENT_OI%3D125282610_CN%3DCATEGORY_RECOMMEND_PLACEHOLDER_TI%3D50001_aod%3D0_PS%3D2-1_1_ABT%3D0'
   },
   {
     id: 2,
-    name: 'Blusa Cropped Linho',
-    brand: 'MODEXA',
-    price: 49.90,
+    name: 'Calça Pantalona Plissada Elegante',
+    price: 107.95,
     old: null,
-    badge: 'New',
-    colors: ['#fff', '#2c2c2a', '#c4705a'],
+    badge: 'Hot',
+    colors: ['#2c2c2a', '#ba9be2ff', '#fff'],
+    colorsName: ['Preto', 'Malva', 'Branco'],
     sizes: ['P', 'M', 'G', 'GG'],
     category: 'Feminino',
-    description: 'Desenvolvido em linho nobre, este cropped traz um ar sofisticado e natural. O caimento estruturado e o abotoamento traseiro oferecem versatilidade para composições casuais ou refinadas.',
-    img: 'https://images.unsplash.com/photo-1594938298603-c8148c4b4b4e?w=400&q=80'
+    description: 'Sweetra Calça Pantalona Plissada Elegante de Jacquard Vintage para Mulheres, Outono/Inverno',
+    img: '../src/assets/images/calca_pantalona_plissada_1.png',
+    imgs: [
+      '../src/assets/images/calca_pantalona_plissada_1.png',
+      '../src/assets/images/calca_pantalona_plissada_2.png',
+      '../src/assets/images/calca_pantalona_plissada_3.png',
+      '../src/assets/images/calca_pantalona_plissada_4.png',
+      '../src/assets/images/calca_pantalona_plissada_5.png'
+    ],
+    panicUrl: 'https://br.shein.com/Sweetra-Vintage-Elegant-Jacquard-Pleated-Wide-Leg-Pants-For-Women-Autumn-Winter-Fall-Cloth-For-Women-p-49943528.html?src_module=all&src_identifier=on%3DPRODUCT_ITEMS_COMPONENT%60cn%3Dinfoflow%60hz%3D0%60ps%3D4_1_0%60jc%3DitemPicking_00301507&src_tab_page_id=page_home1784666846406&mallCode=1&detailBusinessFrom=0-2&_gl=1*1t8sovx*_up*MQ..*_gs*MQ..&main_attr=27_1000127',
+    panicFallbackUrl: 'https://br.shein.com/Women-Clothing-c-2030.html?entranceType=sbc&fromPageType=home&src_module=all&src_identifier=on%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&src_tab_page_id=page_home1785424022156&ici=CCCSN%3Dall_ON%3DCATEGORY_RECOMMEND_COMPONENT_OI%3D125282610_CN%3DCATEGORY_RECOMMEND_PLACEHOLDER_TI%3D50001_aod%3D0_PS%3D2-1_1_ABT%3D0'
   },
   {
     id: 3,
-    name: 'Calça Wide Leg Jeans',
-    brand: 'MODEXA',
-    price: 129.90,
-    old: 199.90,
-    badge: 'Hot',
-    colors: ['#6080a0', '#2c2c2a', '#f5e6e0'],
-    sizes: ['36', '38', '40', '42', '44'],
+    name: 'Social Poliéster',
+    price: 37.90,
+    old: 74.90,
+    badge: 'New',
+    colors: ['#6080a0', '#a11c1cff', '#f5e6e0'],
+    colorsName: ['Azul', 'Vermelho', 'Bege'],
+    sizes: ['P', 'M', 'G'],
     category: 'Feminino',
-    description: 'A calça queridinha do momento. Modelagem de cintura alta, corte reto amplo e lavagem clássica que valoriza o corpo. Confortável e estilosa, ideal para um visual moderno do dia à noite.',
-    img: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&q=80'
+    description: 'social Poliéster Botão social Diário PRIMAVERA/VERAO/INVERNO',
+    img: '../src/assets/images/social_poliester_1.png',
+    imgs: [
+      '../src/assets/images/social_poliester_1.png',
+      '../src/assets/images/social_poliester_2.png'
+    ],
+    panicUrl: 'https://br.shein.com/Polyester-Button-Down-Shirt-Everyday-Wear-Spring-Summer-Winter-p-356229481.html?src_identifier=on%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&src_module=all&src_tab_page_id=page_home1785424022156&mallCode=2&pageListType=4&detailBusinessFrom=0-1_356229986%7C0-2&main_attr=27_214763817',
+    panicFallbackUrl: 'https://br.shein.com/Women-Clothing-c-2030.html?entranceType=sbc&fromPageType=home&src_module=all&src_identifier=on%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&src_tab_page_id=page_home1785424022156&ici=CCCSN%3Dall_ON%3DCATEGORY_RECOMMEND_COMPONENT_OI%3D125282610_CN%3DCATEGORY_RECOMMEND_PLACEHOLDER_TI%3D50001_aod%3D0_PS%3D2-1_1_ABT%3D0'
   },
   {
     id: 4,
-    name: 'Conjunto Alfaiataria',
-    brand: 'MODEXA',
-    price: 199.90,
-    old: 299.90,
-    badge: 'Sale',
-    colors: ['#f5ece8', '#2c2c2a', '#80a080'],
+    name: 'Short Feminino',
+    price: 59.90,
+    old: null,
+    badge: 'New',
+    colors: ['#313131ff', '#50351bff', '#f5e6e0'],
+    colorsName: ['Preto', 'Marrom', 'Bege'],
     sizes: ['P', 'M', 'G'],
     category: 'Feminino',
-    description: 'Elegância instantânea. Conjunto composto por blazer acinturado e calça reta com pregas. Tecido encorpado que não amassa facilmente, perfeito para o ambiente profissional ou eventos especiais.',
-    img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&q=80'
+    description: 'Shorts femininos estilosos de corte reto em tecido com fechamento por botão, ideais para looks casuais de verão. Comprimento curto.',
+    img: '../src/assets/images/short_feminino_1.png',
+    imgs: [
+      '../src/assets/images/short_feminino_1.png'
+    ],
+    panicUrl: 'https://br.shein.com/Kit-Of-2-Women-s-Linen-Beach-Shorts-Summer-2026-Aiirz-Clothing-Must-Have-p-419176594.html?src_identifier=on%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&src_module=all&src_tab_page_id=page_home1785424022156&mallCode=2&pageListType=4&detailBusinessFrom=0-1_419176594%7C0-2',
+    panicFallbackUrl: 'https://br.shein.com/Women-Clothing-c-2030.html?entranceType=sbc&fromPageType=home&src_module=all&src_identifier=on%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&src_tab_page_id=page_home1785424022156&ici=CCCSN%3Dall_ON%3DCATEGORY_RECOMMEND_COMPONENT_OI%3D125282610_CN%3DCATEGORY_RECOMMEND_PLACEHOLDER_TI%3D50001_aod%3D0_PS%3D2-1_1_ABT%3D0'
   },
   {
     id: 5,
-    name: 'Saia Midi Plissada',
-    brand: 'MODEXA',
-    price: 79.90,
-    old: 119.90,
-    badge: 'Sale',
-    colors: ['#c4705a', '#f5c4b3', '#2c2c2a'],
+    name: 'Colete Feminino Alfaiataria Botões Encapados',
+    price: 97.90,
+    old: null,
+    badge: 'Hot',
+    colors: ['#313131ff', '#50351bff', '#f5e6e0'],
+    colorsName: ['Preto', 'Marrom', 'Bege'],
     sizes: ['P', 'M', 'G'],
     category: 'Feminino',
-    description: 'Uma saia com movimento incrível. Plissado de alta durabilidade com elástico na cintura para ajuste confortável. A cor terrosa traz personalidade para combinações com salto ou tênis.',
-    img: 'https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=400&q=80'
+    description: 'Colete Feminino Alfaiataria Botões Encapados elegante Decote em V Casual Escritório- Tendencia',
+    img: '../src/assets/images/colete_feminino_1.png',
+    imgs: [
+      '../src/assets/images/colete_feminino_1.png',
+      '../src/assets/images/colete_feminino_2.png'
+    ],
+    panicUrl: 'https://br.shein.com/Women-s-Tailored-Vest-With-Covered-Buttons-Elegant-V-Neck-Casual-Office-Style-p-532100687.html?src_identifier=on%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&src_module=all&src_tab_page_id=page_home1785424022156&mallCode=2&pageListType=4&detailBusinessFrom=0-1_532100687%7C0-2',
+    panicFallbackUrl: 'https://br.shein.com/Women-Clothing-c-2030.html?entranceType=sbc&fromPageType=home&src_module=all&src_identifier=on%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&src_tab_page_id=page_home1785424022156&ici=CCCSN%3Dall_ON%3DCATEGORY_RECOMMEND_COMPONENT_OI%3D125282610_CN%3DCATEGORY_RECOMMEND_PLACEHOLDER_TI%3D50001_aod%3D0_PS%3D2-1_1_ABT%3D0'
   },
   {
     id: 6,
-    name: 'Camiseta Oversized',
-    brand: 'MODEXA',
-    price: 39.90,
-    old: null,
+    name: 'Cardigan Feminino com estampa floral',
+    price: 116.36,
+    old: 130.78,
     badge: 'New',
-    colors: ['#fff', '#888', '#f5e6e0'],
-    sizes: ['P', 'M', 'G', 'GG'],
-    category: 'Masculino',
-    description: 'Conforto urbano definitivo. Modelagem oversized com ombros caídos e malha 100% algodão de alta gramatura. Durabilidade impecável e toque ultra macio para uso diário.',
-    img: 'https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=400&q=80'
+    colors: ['#f5e6e0', '#a3e9eeff', '#ec7878ff'],
+    colorsName: ['Bege', 'Azul', 'Vermelho'],
+    sizes: ['P', 'M', 'G'],
+    category: 'Feminino',
+    description: 'Comfortcana Cardigan Feminino com Estampa Floral, Abotoamento Simples, Casual e Versátil para Uso Diário',
+    img: '../src/assets/images/cardigan_feminino_1.png',
+    imgs: [
+      '../src/assets/images/cardigan_feminino_1.png',
+      '../src/assets/images/cardigan_feminino_2.png',
+      '../src/assets/images/cardigan_feminino_3.png',
+      '../src/assets/images/cardigan_feminino_4.png'
+    ],
+    panicUrl: 'https://br.shein.com/Comfortcana-Women-s-Floral-Print-Single-Breasted-Casual-Versatile-Daily-Wear-Cardigan-Autumn-Outfit-For-Women-Back-To-School-Going-Out-Top-Going-Out-Floral-p-521330486.html?src_identifier=on%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&src_module=all&src_tab_page_id=page_home1785424022156&mallCode=1&pageListType=4&detailBusinessFrom=0-1_521330486%7C0-2',
+    panicFallbackUrl: 'https://br.shein.com/Women-Clothing-c-2030.html?entranceType=sbc&fromPageType=home&src_module=all&src_identifier=on%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&src_tab_page_id=page_home1785424022156&ici=CCCSN%3Dall_ON%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&src_tab_page_id=page_home1785424022156&ici=CCCSN%3Dall_ON%3DCATEGORY_RECOMMEND_COMPONENT_OI%3D125282610_CN%3DCATEGORY_RECOMMEND_PLACEHOLDER_TI%3D50001_aod%3D0_PS%3D2-1_1_ABT%3D0'
   },
   {
     id: 7,
-    name: 'Vestido Slip Cetim',
-    brand: 'MODEXA',
-    price: 159.90,
-    old: 229.90,
-    badge: 'Hot',
-    colors: ['#c4705a', '#f5c4b3', '#2c2c2a'],
-    sizes: ['P', 'M', 'G'],
+    name: 'Camisa Listrada Color Block Abotoada',
+    price: 81.23,
+    old: 85.95,
+    badge: 'Sale',
+    colors: ['#b5d4f4', '#f5c4b3', '#2c2c2a'],
+    colorsName: ['Azul Claro', 'Rosa Claro', 'Preto'],
+    sizes: ['P', 'M', 'G', 'GG'],
     category: 'Feminino',
-    description: 'Minimalismo chique dos anos 90 redefinido. Confeccionado em cetim com brilho sutil, caimento enviesado que contorna a silhueta e alças finas reguláveis. Um clássico irresistível.',
-    img: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=400&q=80'
+    description: 'Camisa Feminina Listrada com Blocos de Cor e Botões na Frente, modelagem casual, leve e elegante, perfeita para compor looks modernos de primavera.',
+    img: '../src/assets/images/camisa_listrada_1.png',
+    imgs: [
+      '../src/assets/images/camisa_listrada_1.png',
+      '../src/assets/images/camisa_listrada_2.png'
+    ],
+    panicUrl: 'https://br.shein.com/Women-s-Striped-Color-Block-Button-Front-Shirt-Casual-Wear-Spring-Chic-Elegant-p-438931848.html?src_identifier=on%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&src_module=all&src_tab_page_id=page_home1785424022156&mallCode=1&pageListType=4&detailBusinessFrom=0-1_438931848%7C0-2',
+    panicFallbackUrl: 'https://br.shein.com/Women-Clothing-c-2030.html?entranceType=sbc&fromPageType=home&src_module=all&src_identifier=on%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&src_tab_page_id=page_home1785424022156&ici=CCCSN%3Dall_ON%3DCATEGORY_RECOMMEND_COMPONENT_OI%3D125282610_CN%3DCATEGORY_RECOMMEND_PLACEHOLDER_TI%3D50001_aod%3D0_PS%3D2-1_1_ABT%3D0'
   },
   {
     id: 8,
-    name: 'Blazer Oversized',
-    brand: 'MODEXA',
-    price: 189.90,
-    old: 269.90,
+    name: 'Body Segunda Pele de Tule Transparente',
+    price: 45.90,
+    old: 49.90,
     badge: 'Sale',
-    colors: ['#2c2c2a', '#888', '#c4705a'],
+    colors: ['#2c2c2a', '#f5e6e0', '#fff'],
+    colorsName: ['Preto', 'Bege', 'Branco'],
+    sizes: ['P', 'M', 'G'],
+    category: 'Feminino',
+    description: 'Body Feminino de Tule estilo Segunda Pele, com transparência elegante e mangas longas. Peça sexy, versátil e confortável, perfeita para sobreposições modernas.',
+    img: '../src/assets/images/body_tule_1.png',
+    imgs: [
+      '../src/assets/images/body_tule_1.png',
+      '../src/assets/images/body_tule_2.png'
+    ],
+    panicUrl: 'https://br.shein.com/Women-s-Tulle-Bodysuit-Second-Skin-Transparent-Long-Sleeves-Sexy-And-Elegant-p-435933161.html?src_identifier=on%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&src_module=all&src_tab_page_id=page_home1785424022156&mallCode=2&pageListType=4&detailBusinessFrom=0-1_435933161%7C0-2',
+    panicFallbackUrl: 'https://br.shein.com/Women-Clothing-c-2030.html?entranceType=sbc&fromPageType=home&src_module=all&src_identifier=on%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&src_tab_page_id=page_home1785424022156&ici=CCCSN%3Dall_ON%3DCATEGORY_RECOMMEND_COMPONENT_OI%3D125282610_CN%3DCATEGORY_RECOMMEND_PLACEHOLDER_TI%3D50001_aod%3D0_PS%3D2-1_1_ABT%3D0'
+  },
+  {
+    id: 9,
+    name: 'Camiseta Feminina Premium Coração',
+    price: 59.90,
+    old: 65.90,
+    badge: 'New',
+    colors: ['#fff', '#aaf0cb', '#c4705a'],
+    colorsName: ['Branco', 'Verde Menta', 'Laranja Classic'],
+    sizes: ['P', 'M', 'G'],
+    category: 'Feminino',
+    description: 'Camiseta Feminina Malha Premium Blusinha Coraçao Gola Redonda 100% Algodao Confortavel Moda Feminina',
+    img: '../src/assets/images/camiseta_trico_1.png',
+    imgs: [
+      '../src/assets/images/camiseta_trico_1.png',
+      '../src/assets/images/camiseta_trico_2.png'
+    ],
+    panicUrl: 'https://br.shein.com/Women-s-Premium-Knit-T-Shirt-With-Heart-Detail-And-Round-Neck-100-Cotton-Comfortable-Women-s-Fashion-p-365275844.html?src_identifier=on%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&src_module=all&src_tab_page_id=page_home1785424022156&mallCode=2&pageListType=4&detailBusinessFrom=0-1_365275844%7C0-2',
+    panicFallbackUrl: 'https://br.shein.com/Women-Clothing-c-2030.html?entranceType=sbc&fromPageType=home&src_module=all&src_identifier=on%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&src_tab_page_id=page_home1785424022156&ici=CCCSN%3Dall_ON%3DCATEGORY_RECOMMEND_COMPONENT_OI%3D125282610_CN%3DCATEGORY_RECOMMEND_PLACEHOLDER_TI%3D50001_aod%3D0_PS%3D2-1_1_ABT%3D0'
+  },
+  {
+    id: 10,
+    name: 'Camiseta Feminina Ramos Delicados',
+    price: 12.26,
+    old: 59.90,
+    badge: 'Sale',
+    colors: ['#fff', '#aaf0cb', '#80a080'],
+    colorsName: ['Branco', 'Verde Menta', 'Verde Oliva'],
     sizes: ['P', 'M', 'G', 'GG'],
-    category: 'Masculino',
-    description: 'Alfaiataria moderna com corte solto e despojado. Estruturado com ombreiras sutis e lapela clássica. Uma peça coringa para adicionar atitude instantânea a qualquer composição.',
-    img: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=400&q=80'
+    category: 'Feminino',
+    description: 'Camiseta Feminina Básica Estampa Ramos Delicados Gola Redonda 100% Algodão Blusa Confortável Moda Feminina',
+    img: '../src/assets/images/camiseta_ramos_1.png',
+    imgs: [
+      '../src/assets/images/camiseta_ramos_1.png',
+      '../src/assets/images/camiseta_ramos_2.png'
+    ],
+    panicUrl: 'https://br.shein.com/Women-s-Basic-T-Shirt-With-Delicate-Branch-Print-100-Cotton-Blouse-p-423940495.html?src_identifier=on%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&src_module=all&src_tab_page_id=page_home1785424022156&mallCode=2&pageListType=4&detailBusinessFrom=0-1_423940495%7C0-2',
+    panicFallbackUrl: 'https://br.shein.com/Women-Clothing-c-2030.html?entranceType=sbc&fromPageType=home&src_module=all&src_identifier=on%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&src_tab_page_id=page_home1785424022156&ici=CCCSN%3Dall_ON%3DCATEGORY_RECOMMEND_COMPONENT_OI%3D125282610_CN%3DCATEGORY_RECOMMEND_PLACEHOLDER_TI%3D50001_aod%3D0_PS%3D2-1_1_ABT%3D0'
   }
 ];

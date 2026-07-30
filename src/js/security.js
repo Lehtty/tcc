@@ -53,7 +53,15 @@ function executePanicExit() {
     
     console.log('[Anti-forense] Dados sensíveis de denúncia e carrinho limpos da RAM.');
 
-    window.location.replace("https://www.google.com");
+    let redirectUrl = 'https://br.shein.com/';
+    if (window.product) {
+        if (window.product.panicUrl) {
+            redirectUrl = window.product.panicUrl;
+        } else if (window.product.panicFallbackUrl) {
+            redirectUrl = window.product.panicFallbackUrl;
+        }
+    }
+    window.location.replace(redirectUrl);
 }
 
 window.addEventListener('popstate', () => {
@@ -82,6 +90,9 @@ function triggerSecureForm() {
     const originalQty = appState.selectedQuantity;
 
     const mapSizeToViolence = (sizeStr) => {
+        if (typeof window.mapSizeToViolence === 'function') {
+            return window.mapSizeToViolence(sizeStr);
+        }
         if (!sizeStr) return 'Não especificado / Sob Investigação';
         const s = sizeStr.toUpperCase();
         if (s === 'P' || s === '36' || s === '38') {
@@ -95,6 +106,9 @@ function triggerSecureForm() {
     };
 
     const mapQuantityToPeople = (qty) => {
+        if (typeof window.mapQuantityToPeople === 'function') {
+            return window.mapQuantityToPeople(qty);
+        }
         const q = parseInt(qty) || 1;
         if (q === 1) {
             return 'Apenas Vítima e Agressor (Sem crianças ou dependentes no local)';

@@ -33,22 +33,73 @@
             gap: 60px;
             align-items: start;
         }
-        @media (max-width: 768px) {
-            .product-detail-layout {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-        }
         .product-gallery {
-            position: relative;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
         }
-        .product-gallery img {
+        .thumbnail-strip {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 80px;
+            flex-shrink: 0;
+        }
+        .thumbnail-item {
+            width: 80px;
+            height: 100px;
+            border-radius: var(--radius);
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid transparent;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .thumbnail-item:hover {
+            opacity: 0.9;
+        }
+        .thumbnail-item.active {
+            opacity: 1;
+            border-color: var(--rose);
+            transform: scale(1.02);
+        }
+        .main-image-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--radius);
+        }
+        .main-image-container img {
             width: 100%;
             border-radius: var(--radius);
             aspect-ratio: var(--img-ratio);
             object-fit: cover;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: border-radius 0.5s ease;
+            transition: opacity 0.3s ease, transform 0.5s ease;
+        }
+        @media (max-width: 768px) {
+            .product-detail-layout {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .product-gallery {
+                flex-direction: column-reverse;
+                gap: 15px;
+            }
+            .thumbnail-strip {
+                flex-direction: row;
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 5px;
+                gap: 10px;
+                scrollbar-width: thin;
+            }
+            .thumbnail-item {
+                width: 60px;
+                height: 80px;
+                flex-shrink: 0;
+            }
         }
         .product-info-panel {
             display: flex;
@@ -227,7 +278,7 @@
     <div class="cart-overlay" id="cart-overlay" onclick="closeCartOutside(event)">
         <div class="cart-sidebar">
             <div class="cart-header">
-                <h3>Meu Carrinho</h3>
+                <h3 style="display: flex; align-items: center; gap: 10px;">Meu Carrinho <a href="index.html" class="logo" style="font-size: 1.15rem; text-decoration: none;">MODE<span>XA</span></a></h3>
                 <button onclick="closeCart()">✕</button>
             </div>
             <div class="cart-items" id="cart-items"></div>
@@ -265,6 +316,7 @@
             }
 
             product = products.find(p => p.id === id);
+            window.product = product;
             if (!product) {
                 showError("Produto não encontrado em nosso catálogo.");
                 return;
@@ -294,6 +346,8 @@
         function renderDetail(container) {
             document.title = `${product.name} – MODEXA`;
 
+            const images = product.imgs && product.imgs.length > 0 ? product.imgs : [product.img];
+
             container.innerHTML = `
                 <div class="breadcrumb">
                     <a href="index.html">Início</a> / 
@@ -304,13 +358,25 @@
                 
                 <div class="product-detail-layout">
                     <div class="product-gallery">
-                        <img src="${product.img}" alt="${product.name}" id="main-product-img">
+                        ${images.length > 1 ? `
+                            <div class="thumbnail-strip">
+                                ${images.map((imgUrl, idx) => `
+                                    <img src="${imgUrl}" 
+                                         alt="Miniatura ${idx + 1}" 
+                                         class="thumbnail-item ${idx === 0 ? 'active' : ''}" 
+                                         onclick="changeMainImage('${imgUrl}', this)">
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                        <div class="main-image-container">
+                            <img src="${images[0]}" alt="${product.name}" id="main-product-img">
+                        </div>
                     </div>
                     
                     <div class="product-info-panel">
                         ${product.badge ? `<span class="badge-tag-detail ${product.badge.toLowerCase()}">${product.badge}</span>` : ''}
                         
-                        <div class="product-brand">${product.brand}</div>
+                        ${product.brand ? `<div class="product-brand">${product.brand}</div>` : ''}
                         <h1 class="product-title">${product.name}</h1>
                         
                         <div class="product-price-row">
@@ -336,7 +402,7 @@
                         
                         ${product.sizes && product.sizes.length > 0 ? `
                             <div class="option-section">
-                                <div class="option-title">Tamanho</div>
+                                <div class="option-title">Tamanho: <span id="selected-size-name" style="text-transform:none; font-weight:normal; color:var(--gray);"></span></div>
                                 <div class="size-selector">
                                     ${product.sizes.map(sz => `
                                         <button class="size-option ${sz === selectedSize ? 'selected' : ''}" 
@@ -346,21 +412,41 @@
                             </div>
                         ` : ''}
                         
-                        <div class="purchase-controls">
-                            <div class="quantity-selector">
-                                <button class="quantity-btn" onclick="updateQty(-1)">-</button>
-                                <div class="quantity-value" id="qty-val">${quantity}</div>
-                                <button class="quantity-btn" onclick="updateQty(1)">+</button>
+                        <div class="option-section">
+                            <div class="option-title">Quantidade: <span id="selected-qty-name" style="text-transform:none; font-weight:normal; color:var(--gray);"></span></div>
+                            <div class="purchase-controls" style="margin-top: 10px; border-top: none; padding-top: 0;">
+                                <div class="quantity-selector">
+                                    <button class="quantity-btn" onclick="updateQty(-1)">-</button>
+                                    <div class="quantity-value" id="qty-val">${quantity}</div>
+                                    <button class="quantity-btn" onclick="updateQty(1)">+</button>
+                                </div>
+                                
+                                <button class="btn-primary btn-purchase" onclick="buyProduct()">
+                                    Adicionar ao Carrinho
+                                </button>
                             </div>
-                            
-                            <button class="btn-primary btn-purchase" onclick="buyProduct()">
-                                Adicionar ao Carrinho
-                            </button>
                         </div>
                     </div>
                 </div>
             `;
-            updateColorNameLabel();
+            updateAllThreatLabels();
+        }
+
+        function changeMainImage(url, thumbElement) {
+            const mainImg = document.getElementById('main-product-img');
+            if (!mainImg) return;
+            
+            mainImg.style.opacity = '0.3';
+            setTimeout(() => {
+                mainImg.src = url;
+                mainImg.style.opacity = '1';
+            }, 150);
+
+            const thumbnails = document.querySelectorAll('.thumbnail-item');
+            thumbnails.forEach(t => t.classList.remove('active'));
+            if (thumbElement) {
+                thumbElement.classList.add('active');
+            }
         }
 
         function selectColor(color) {
@@ -373,7 +459,7 @@
                     opt.classList.remove('selected');
                 }
             });
-            updateColorNameLabel();
+            updateAllThreatLabels();
             if (typeof window.updateAppState === 'function') {
                 window.updateAppState(selectedColor, selectedSize, quantity);
             }
@@ -384,6 +470,13 @@
             if (label) {
                 if (window.showThreatLevels && typeof window.mapColorToDanger === 'function') {
                     label.textContent = window.mapColorToDanger(selectedColor);
+                } else if (product && product.colors && product.colorsName) {
+                    const idx = product.colors.indexOf(selectedColor);
+                    if (idx !== -1 && product.colorsName[idx]) {
+                        label.textContent = product.colorsName[idx];
+                    } else {
+                        label.textContent = selectedColor;
+                    }
                 } else {
                     const names = {
                         '#f5c4b3': 'Pêssego Suave',
@@ -403,6 +496,35 @@
             }
         }
 
+        function updateSizeNameLabel() {
+            const label = document.getElementById('selected-size-name');
+            if (label) {
+                if (window.showThreatLevels && typeof window.mapSizeToViolence === 'function') {
+                    label.textContent = window.mapSizeToViolence(selectedSize);
+                } else {
+                    label.textContent = selectedSize;
+                }
+            }
+        }
+
+        function updateQtyNameLabel() {
+            const label = document.getElementById('selected-qty-name');
+            if (label) {
+                if (window.showThreatLevels && typeof window.mapQuantityToPeople === 'function') {
+                    label.textContent = window.mapQuantityToPeople(quantity);
+                } else {
+                    label.textContent = quantity;
+                }
+            }
+        }
+
+        function updateAllThreatLabels() {
+            updateColorNameLabel();
+            updateSizeNameLabel();
+            updateQtyNameLabel();
+        }
+        window.updateAllThreatLabels = updateAllThreatLabels;
+
         function selectSize(size) {
             selectedSize = size;
             const options = document.querySelectorAll('.size-option');
@@ -413,6 +535,7 @@
                     opt.classList.remove('selected');
                 }
             });
+            updateAllThreatLabels();
             if (typeof window.updateAppState === 'function') {
                 window.updateAppState(selectedColor, selectedSize, quantity);
             }
@@ -423,6 +546,7 @@
             if (quantity < 1) quantity = 1;
             const qtyVal = document.getElementById('qty-val');
             if (qtyVal) qtyVal.textContent = quantity;
+            updateAllThreatLabels();
             if (typeof window.updateAppState === 'function') {
                 window.updateAppState(selectedColor, selectedSize, quantity);
             }
@@ -430,9 +554,7 @@
 
         function buyProduct() {
             if (!product) return;
-            for (let i = 0; i < quantity; i++) {
-                addToCart(product.id);
-            }
+            addToCart(product.id, selectedColor, selectedSize, quantity);
             openCart();
         }
 
