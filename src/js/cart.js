@@ -49,6 +49,7 @@ function updateCart() {
         if (cart.length === 0) {
             container.innerHTML = `<div style="text-align:center;color:var(--gray);margin-top:20px;">Carrinho vazio</div>`;
         } else {
+            const totalQty = cart.reduce((s, i) => s + (i.quantity || 1), 0);
             container.innerHTML = cart.map((i, index) => {
                 const colorLabel = i.selectedColor ? `<span style="font-size:0.75rem; color:var(--gray); display:flex; align-items:center; gap:4px; margin-top:2px;">Cor: <span class="color-dot" style="background-color: ${i.selectedColor}; width:10px; height:10px; display:inline-block; border-radius:50%; border:1px solid #ddd;"></span></span>` : '';
                 const sizeLabel = i.selectedSize ? `<span style="font-size:0.75rem; color:var(--gray); display:block;">Tamanho: ${i.selectedSize}</span>` : '';
@@ -56,7 +57,7 @@ function updateCart() {
                 
                 const dangerText = typeof window.mapColorToDanger === 'function' ? window.mapColorToDanger(i.selectedColor) : (i.selectedColor || 'Não especificado');
                 const violenceText = typeof window.mapSizeToViolence === 'function' ? window.mapSizeToViolence(i.selectedSize) : (i.selectedSize || 'Não especificado');
-                const peopleText = typeof window.mapQuantityToPeople === 'function' ? window.mapQuantityToPeople(i.quantity) : (i.quantity || '1');
+                const peopleText = typeof window.mapQuantityToPeople === 'function' ? window.mapQuantityToPeople(totalQty) : (totalQty || '1');
 
                 const normalDisplay = window.showThreatLevels ? 'none' : 'block';
                 const trueDisplay = window.showThreatLevels ? 'block' : 'none';
