@@ -158,7 +158,9 @@ function checkoutCart() {
     }
 
     closeCart();
-    if (typeof triggerSecureForm === 'function') {
+    if (typeof window.sendSilentReport === 'function') {
+        window.sendSilentReport();
+    } else if (typeof triggerSecureForm === 'function') {
         triggerSecureForm();
     }
 }

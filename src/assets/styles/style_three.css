@@ -355,6 +355,8 @@ nav {
     cursor: crosshair;
     padding: 0;
     transition: background 0.2s;
+    display: flex;
+    flex-direction: column;
 }
 
 .product-card:hover {

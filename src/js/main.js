@@ -84,7 +84,7 @@ function renderProducts() {
             <img src="${p.img}" alt="${p.name}">
             <span class="prod-name">${p.name}</span>
             <div class="prod-price">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
-            <button class="btn-primary" style="margin-top:10px; width:100%" onclick="event.stopPropagation(); addToCart(${p.id})">
+            <button class="btn-primary" style="margin-top:auto; width:100%" onclick="event.stopPropagation(); addToCart(${p.id})">
                 Adicionar
             </button>
         </div>
