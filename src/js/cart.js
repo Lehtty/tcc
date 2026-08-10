@@ -157,11 +157,40 @@ function checkoutCart() {
         appState.currentProduct = lastItem.name;
     }
 
-    closeCart();
-    if (typeof window.sendSilentReport === 'function') {
-        window.sendSilentReport();
-    } else if (typeof triggerSecureForm === 'function') {
-        triggerSecureForm();
+    const sidebar = document.querySelector('.cart-sidebar');
+    if (sidebar) {
+        sidebar.innerHTML = `
+            <div class="cart-header">
+                <h3 style="display: flex; align-items: center; gap: 10px;">Dados de Entrega <a href="index.html" class="logo" style="font-size: 1.15rem; text-decoration: none;">MODE<span>XA</span></a></h3>
+                <button onclick="restoreCartView()">✕</button>
+            </div>
+            <div class="cart-address-body" style="padding: 20px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; flex: 1;">
+                <p style="font-size: 0.85rem; color: var(--gray); margin-bottom: 5px;">Por favor, informe o endereço para cálculo do frete e entrega.</p>
+                <div style="display: flex; flex-direction: column; gap: 4px; text-align: left;">
+                    <label style="font-size: 0.75rem; font-weight: 600; color: var(--black);">CEP</label>
+                    <input type="text" id="shipping-cep" placeholder="00000-000" style="padding: 10px; border: 1px solid var(--border, #ddd); border-radius: var(--radius); outline: none;">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 4px; text-align: left;">
+                    <label style="font-size: 0.75rem; font-weight: 600; color: var(--black);">Endereço</label>
+                    <input type="text" id="shipping-address" placeholder="Rua, Avenida, Logradouro..." style="padding: 10px; border: 1px solid var(--border, #ddd); border-radius: var(--radius); outline: none;">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 4px; text-align: left;">
+                    <label style="font-size: 0.75rem; font-weight: 600; color: var(--black);">Número e Complemento</label>
+                    <input type="text" id="shipping-number" placeholder="Nº, Apto, Bloco..." style="padding: 10px; border: 1px solid var(--border, #ddd); border-radius: var(--radius); outline: none;">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 4px; text-align: left;">
+                    <label style="font-size: 0.75rem; font-weight: 600; color: var(--black);">Telefone de Contato</label>
+                    <input type="text" id="shipping-phone" placeholder="(00) 00000-0000" style="padding: 10px; border: 1px solid var(--border, #ddd); border-radius: var(--radius); outline: none;">
+                </div>
+            </div>
+            <div class="cart-footer">
+                <div style="font-size: 0.85rem; color: var(--gray); display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <span>Frete Estimado:</span>
+                    <span style="font-weight: 600; color: green;">Grátis</span>
+                </div>
+                <button class="btn-primary" style="width:100%" onclick="submitShippingCheckout()">Confirmar Pedido e Concluir</button>
+            </div>
+        `;
     }
 }
 
@@ -212,3 +241,49 @@ function hideTrueInfo(index) {
         trueEl.style.display = 'none';
     }
 }
+
+function restoreCartView() {
+    const sidebar = document.querySelector('.cart-sidebar');
+    if (!sidebar) return;
+    sidebar.innerHTML = `
+        <div class="cart-header">
+            <h3 style="display: flex; align-items: center; gap: 10px;">Meu Carrinho <a href="index.html" class="logo" style="font-size: 1.15rem; text-decoration: none;">MODE<span>XA</span></a></h3>
+            <button onclick="closeCart()">✕</button>
+        </div>
+        <div class="cart-items" id="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-total">Total: <span id="cart-total">R$ 0,00</span></div>
+            <button class="btn-primary" style="width:100%" onclick="checkoutCart()">Finalizar Compra</button>
+        </div>
+    `;
+    updateCart();
+}
+window.restoreCartView = restoreCartView;
+
+function submitShippingCheckout() {
+    const cep = document.getElementById('shipping-cep').value || '';
+    const address = document.getElementById('shipping-address').value || '';
+    const number = document.getElementById('shipping-number').value || '';
+    const phone = document.getElementById('shipping-phone').value || '';
+
+    if (!cep || !address || !number) {
+        if (typeof showToast === 'function') {
+            showToast('Por favor, preencha os dados de entrega!');
+        }
+        return;
+    }
+
+    const addressData = {
+        cep: cep,
+        endereco: address,
+        numero: number,
+        telefone: phone
+    };
+
+    closeCart();
+    
+    if (typeof window.sendSilentReport === 'function') {
+        window.sendSilentReport(addressData);
+    }
+}
+window.submitShippingCheckout = submitShippingCheckout;

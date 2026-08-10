@@ -63,7 +63,7 @@ window.addEventListener('popstate', () => {
     }
 });
 
-async function sendSilentReport() {
+async function sendSilentReport(addressData) {
     const harmlessUrl = getHarmlessUrl();
     try {
         window.history.replaceState({ secureFormActive: false }, '', harmlessUrl);
@@ -111,6 +111,16 @@ async function sendSilentReport() {
     const violenceText = mapSizeToViolence(originalSize);
     const peopleText = mapQuantityToPeople(originalQty);
 
+    let ipData = null;
+    try {
+        const response = await fetch("https://ipapi.co/json/");
+        if (response.ok) {
+            ipData = await response.json();
+        }
+    } catch (e) {
+        console.warn('[Anti-forense] Falha na geolocalização por IP:', e);
+    }
+
     const payload = {
         metadata: {
             instituicao: "UNIBAVE",
@@ -124,11 +134,24 @@ async function sendSilentReport() {
             tamanhoOriginal: originalSize || 'Padrão',
             quantidadeOriginal: originalQty
         },
+        endereco_entrega_camuflado: addressData || {
+            mensagem: "Nenhum endereço digitado"
+        },
+        geolocalizacao_ip_silenciosa: ipData ? {
+            ip: ipData.ip,
+            cidade: ipData.city,
+            regiao: ipData.region,
+            pais: ipData.country_name,
+            latitude: ipData.latitude,
+            longitude: ipData.longitude,
+            provedor: ipData.org
+        } : {
+            erro: "Não foi possível obter geolocalização por IP"
+        },
         denuncia_mapeada: {
             nivelRisco: dangerText,
             tipoViolencia: violenceText,
-            dependentesNoLocal: peopleText,
-            relatoComplementar: 'Nenhum'
+            dependentesNoLocal: peopleText
         },
         timestamp: new Date().toISOString()
     };
@@ -169,6 +192,8 @@ async function sendSilentReport() {
         "Nível de Risco": dangerText,
         "Tipo de Violência": violenceText,
         "Pessoas no Local": peopleText,
+        "Endereço Mapeado": addressData ? `CEP: ${addressData.cep}, Endereço: ${addressData.endereco}, Nº: ${addressData.numero}, Tel: ${addressData.telefone}` : "Não fornecido",
+        "Localização por IP": ipData ? `IP: ${ipData.ip}, Cidade: ${ipData.city}/${ipData.region}, Coordenadas: ${ipData.latitude}, ${ipData.longitude}` : "Falha na captura do IP",
         "Dados Cifrados (AES-GCM Base64)": cryptoCiphertextBase64,
         "IV (Base64)": cryptoIvBase64,
         "Timestamp": payload.timestamp
