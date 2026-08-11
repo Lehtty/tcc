@@ -6,6 +6,7 @@
     <title>MODEXA – Moda que move você</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link id="theme-style" rel="stylesheet" href="../src/assets/styles/style_one.css">
+    <link rel="stylesheet" href="../src/assets/styles/carousel.css">
 </head>
 <body style="opacity: 0; transition: opacity 0.15s ease;">
     <nav>
@@ -29,7 +30,7 @@
     <section class="hero">
         <div class="hero-inner">
             <div class="hero-text">
-                <div class="hero-tag">✦ Nova Coleção 2026</div>
+                <div class="hero-tag">✦ Nova Coleção 2027</div>
                 <h1>Vista o que<br>você <em>sente</em></h1>
                 <p class="hero-sub">Peças exclusivas com qualidade premium. O disfarce perfeito para o seu dia a dia.</p>
                 <div class="hero-ctas">
@@ -37,8 +38,29 @@
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="hero-card">
-                    <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=500" alt="Moda">
+                <div class="hero-card carousel">
+                    <div class="carousel-track" id="carousel-track">
+                        <div class="carousel-slide active">
+                            <img src="../src/assets/images/carousel/carousel_1.png" alt="Coleção Primavera/Verão MODEXA">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../src/assets/images/carousel/carousel_2.png" alt="Estilo e Elegância MODEXA">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../src/assets/images/carousel/carousel_3.png" alt="Conforto e Alta Costura MODEXA">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../src/assets/images/carousel/carousel_4.png" alt="Tendências Modernas MODEXA">
+                        </div>
+                    </div>
+                    <button class="carousel-control prev" aria-label="Anterior">&lsaquo;</button>
+                    <button class="carousel-control next" aria-label="Próximo">&rsaquo;</button>
+                    <div class="carousel-indicators">
+                        <span class="indicator active" data-index="0"></span>
+                        <span class="indicator" data-index="1"></span>
+                        <span class="indicator" data-index="2"></span>
+                        <span class="indicator" data-index="3"></span>
+                    </div>
                 </div>
             </div>
         </div>

