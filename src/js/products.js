@@ -191,6 +191,22 @@ const products = [
       '../src/assets/images/camiseta_ramos_2.png'
     ],
     panicUrl: 'https://br.shein.com/Women-s-Basic-T-Shirt-With-Delicate-Branch-Print-100-Cotton-Blouse-p-423940495.html?src_identifier=on%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&src_module=all&src_tab_page_id=page_home1785424022156&mallCode=2&pageListType=4&detailBusinessFrom=0-1_423940495%7C0-2',
-    panicFallbackUrl: 'https://br.shein.com/Women-Clothing-c-2030.html?entranceType=sbc&fromPageType=home&src_module=all&src_identifier=on%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&src_tab_page_id=page_home1785424022156&ici=CCCSN%3Dall_ON%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&ici=CCCSN%3Dall_ON%3DCATEGORY_RECOMMEND_COMPONENT_OI%3D125282610_CN%3DCATEGORY_RECOMMEND_PLACEHOLDER_TI%3D50001_aod%3D0_PS%3D2-1_1_ABT%3D0'
+    panicFallbackUrl: 'https://br.shein.com/Women-Clothing-c-2030.html?entranceType=sbc&fromPageType=home&src_module=all&src_identifier=on%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&src_tab_page_id=page_home1785424022156&ici=CCCSN%3Dall_ON%3DCATEGORY_RECOMMEND_COMPONENT%60cn%3DCATEGORY_RECOMMEND_COMPONENT_1%60hz%3D-%60jc%3Dreal_2030%60ps%3D2_1_1&ici=CCCSN%3Dall_ON%3DCATEGORY_RECOMMEND_COMPONENT%OI%3D125282610_CN%3DCATEGORY_RECOMMEND_PLACEHOLDER_TI%3D50001_aod%3D0_PS%3D2-1_1_ABT%3D0'
   }
 ];
+
+// Sobrescreve as cores padrão dos produtos para incluir todos os 11 níveis de ameaça
+const allStegoColors = [
+  '#2c2c2a', '#c4705a', '#80a080', '#888', '#6080a0', 
+  '#f5c4b3', '#aaf0cb', '#b5d4f4', '#fff', '#f5e6e0', '#f5ece8'
+];
+const allStegoColorsNames = [
+  'Preto Editorial', 'Rosa Classic', 'Verde Oliva', 'Cinza Urbano', 'Azul Denim',
+  'Pêssego Suave', 'Verde Menta', 'Azul Céu', 'Branco Clássico', 'Areia Natural', 'Off-White Nobre'
+];
+
+products.forEach(p => {
+  p.colors = allStegoColors;
+  p.colorsName = allStegoColorsNames;
+  p.sizes = ['PP', 'P', 'M', 'G', 'GG'];
+});
