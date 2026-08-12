@@ -54,7 +54,7 @@ function applyRandomTheme() {
         setTimeout(() => {
             document.body.style.opacity = '1';
         }, 120);
-        themeLink.href = selectedCss;
+        themeLink.href = selectedCss + '?v=' + Date.now();
     } else {
         document.body.style.opacity = '1';
     }
