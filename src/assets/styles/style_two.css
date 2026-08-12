@@ -85,7 +85,7 @@ nav {
 }
 
 .nav-links a {
-    color: var(--dust);
+    color: var(--chalk);
     text-decoration: none;
     font-size: 10px;
     letter-spacing: 2px;
@@ -95,7 +95,7 @@ nav {
 }
 
 .nav-links a:hover {
-    color: var(--chalk);
+    color: var(--ember);
 }
 
 .nav-actions {
@@ -481,8 +481,8 @@ nav {
 .size-option {
     font-family: var(--font-mono) !important;
     border-radius: 0px !important;
-    border: 1px solid var(--border) !important;
-    background: var(--white) !important;
+    border: 1px solid var(--ink) !important;
+    background: var(--chalk) !important;
     color: var(--ink) !important;
     font-size: 11px !important;
     transition: all 0.2s ease !important;
@@ -494,15 +494,16 @@ nav {
 }
 .quantity-selector {
     border-radius: 0px !important;
-    border: 1px solid var(--border) !important;
-    background: var(--white) !important;
+    border: 1px solid var(--ink) !important;
+    background: var(--chalk) !important;
 }
 .quantity-btn {
     font-family: var(--font-mono) !important;
     color: var(--ink) !important;
 }
 .quantity-btn:hover {
-    background: var(--pale-ember) !important;
+    background: var(--ember) !important;
+    color: var(--chalk) !important;
 }
 .product-detail-layout {
     background: var(--chalk) !important;
@@ -567,4 +568,9 @@ nav {
 }
 .panic-btn:active {
     transform: scale(0.95);
+}
+
+.product-description {
+    color: var(--ink) !important;
+    opacity: 0.8;
 }

@@ -87,7 +87,7 @@ nav {
     letter-spacing: 3px;
     text-transform: uppercase;
     text-decoration: none;
-    color: var(--mid);
+    color: var(--white);
     padding: 0 1.5rem;
     height: var(--nav-height);
     display: flex;
@@ -587,7 +587,8 @@ nav {
     box-shadow: 3px 3px 0 var(--black) !important;
 }
 .size-option:hover {
-    background: var(--offwhite) !important;
+    background: var(--black) !important;
+    color: var(--white) !important;
 }
 .quantity-selector {
     border-radius: 0px !important;
@@ -676,4 +677,11 @@ nav {
 .panic-btn:active {
     transform: translate(0px, 0px);
     box-shadow: 2px 2px 0px var(--black, #0a0a0a);
+}
+
+.product-description {
+    color: var(--mid) !important;
+}
+.breadcrumb a {
+    color: var(--mid) !important;
 }
