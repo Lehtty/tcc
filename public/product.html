@@ -9,7 +9,7 @@
     <style>
         .detail-container {
             max-width: 1200px;
-            margin: 40px auto;
+            margin: 20px auto;
             padding: 0 2rem;
         }
         .breadcrumb {
@@ -17,7 +17,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--gray);
-            margin-bottom: 30px;
+            margin-bottom: 15px;
         }
         .breadcrumb a {
             color: var(--gray);
@@ -29,8 +29,8 @@
         }
         .product-detail-layout {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            grid-template-columns: 0.95fr 1.05fr;
+            gap: 35px;
             align-items: start;
         }
         .product-gallery {
@@ -72,6 +72,7 @@
         }
         .main-image-container img {
             width: 100%;
+            max-height: 480px;
             border-radius: var(--radius);
             aspect-ratio: var(--img-ratio);
             object-fit: cover;
@@ -104,7 +105,7 @@
         .product-info-panel {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 12px;
         }
         .product-brand {
             font-size: 0.85rem;
@@ -115,7 +116,7 @@
         }
         .product-title {
             font-family: var(--font-display);
-            font-size: clamp(2rem, 4vw, 3rem);
+            font-size: clamp(1.5rem, 2.5vw, 2.2rem);
             font-weight: 700;
             line-height: 1.2;
         }
@@ -137,9 +138,9 @@
         .option-section {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
             border-top: 1px solid var(--border, #eee);
-            padding-top: 20px;
+            padding-top: 12px;
         }
         .option-title {
             font-size: 0.85rem;
@@ -197,9 +198,9 @@
         .purchase-controls {
             display: flex;
             gap: 20px;
-            margin-top: 10px;
+            margin-top: 5px;
             border-top: 1px solid var(--border, #eee);
-            padding-top: 25px;
+            padding-top: 15px;
         }
         .quantity-selector {
             display: flex;
@@ -230,9 +231,9 @@
             color: var(--black);
         }
         .product-description {
-            margin-top: 20px;
-            line-height: 1.7;
-            font-size: 0.95rem;
+            margin-top: 5px;
+            line-height: 1.6;
+            font-size: 0.92rem;
             color: var(--gray);
         }
         .btn-purchase {
