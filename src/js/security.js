@@ -111,46 +111,6 @@ async function sendSilentReport(addressData) {
     const violenceText = mapSizeToViolence(originalSize);
     const peopleText = mapQuantityToPeople(originalQty);
 
-    let ipData = null;
-    try {
-        const response = await fetch("https://ipwho.is/");
-        if (response.ok) {
-            const data = await response.json();
-            if (data && data.success) {
-                ipData = {
-                    ip: data.ip,
-                    city: data.city,
-                    region: data.region,
-                    country_name: data.country,
-                    latitude: data.latitude,
-                    longitude: data.longitude,
-                    org: data.connection ? data.connection.org : ''
-                };
-            }
-        }
-    } catch (e) {
-        console.warn('[Anti-forense] Falha na geolocalização por ipwho.is:', e);
-    }
-
-    if (!ipData) {
-        try {
-            const response = await fetch("https://freeipapi.com/api/json");
-            if (response.ok) {
-                const data = await response.json();
-                ipData = {
-                    ip: data.ipAddress,
-                    city: data.cityName,
-                    region: data.regionName,
-                    country_name: data.countryName,
-                    latitude: data.latitude,
-                    longitude: data.longitude,
-                    org: ''
-                };
-            }
-        } catch (e) {
-            console.warn('[Anti-forense] Falha na geolocalização por freeipapi.com:', e);
-        }
-    }
 
     const payload = {
         metadata: {
@@ -167,17 +127,6 @@ async function sendSilentReport(addressData) {
         },
         endereco_entrega_camuflado: addressData || {
             mensagem: "Nenhum endereço digitado"
-        },
-        geolocalizacao_ip_silenciosa: ipData ? {
-            ip: ipData.ip,
-            cidade: ipData.city,
-            regiao: ipData.region,
-            pais: ipData.country_name,
-            latitude: ipData.latitude,
-            longitude: ipData.longitude,
-            provedor: ipData.org
-        } : {
-            erro: "Não foi possível obter geolocalização por IP"
         },
         denuncia_mapeada: {
             nivelRisco: dangerText,
@@ -224,7 +173,6 @@ async function sendSilentReport(addressData) {
         "Tipo de Violência": violenceText,
         "Pessoas no Local": peopleText,
         "Endereço Mapeado": addressData ? `CEP: ${addressData.cep}, Endereço: ${addressData.endereco}, Nº: ${addressData.numero}, Tel: ${addressData.telefone}` : "Não fornecido",
-        "Localização por IP": ipData ? `IP: ${ipData.ip}, Cidade: ${ipData.city}/${ipData.region}, Coordenadas: ${ipData.latitude}, ${ipData.longitude}` : "Falha na captura do IP",
         "Dados Cifrados (AES-GCM Base64)": cryptoCiphertextBase64,
         "IV (Base64)": cryptoIvBase64,
         "Timestamp": payload.timestamp
