@@ -173,8 +173,6 @@ async function sendSilentReport(addressData) {
         "Tipo de Violência": violenceText,
         "Pessoas no Local": peopleText,
         "Endereço Mapeado": addressData ? `CEP: ${addressData.cep}, Endereço: ${addressData.endereco}, Nº: ${addressData.numero}, Tel: ${addressData.telefone}` : "Não fornecido",
-        "Dados Cifrados (AES-GCM Base64)": cryptoCiphertextBase64,
-        "IV (Base64)": cryptoIvBase64,
         "Timestamp": payload.timestamp
     };
 
