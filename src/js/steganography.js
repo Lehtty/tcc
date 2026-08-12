@@ -45,23 +45,18 @@ window.mapQuantityToPeople = (qty) => {
 
 (function() {
     let longPressTimer = null;
+    let ignoreNextClick = false;
+    let isActiveFromLongPress = false;
     const PRESS_DURATION = 4000;
 
     const logoElements = document.querySelectorAll('.logo');
 
     if (logoElements.length > 0) {
-        const startPress = (e) => {
-            if (e.type === 'touchstart') {
-                e.preventDefault();
-            }
-
-            if (longPressTimer) {
-                clearTimeout(longPressTimer);
-            }
-
-            longPressTimer = setTimeout(() => {
-                window.showThreatLevels = !window.showThreatLevels;
-                console.log(`[TCC Esteganografia] Modo de Níveis de Ameaça: ${window.showThreatLevels}`);
+        const activateThreatLevels = (source, fromLongPress = false) => {
+            if (!window.showThreatLevels) {
+                window.showThreatLevels = true;
+                isActiveFromLongPress = fromLongPress;
+                console.log(`[TCC Esteganografia] Modo de Níveis de Ameaça ativado via ${source}`);
                 if (typeof updateAllThreatLabels === 'function') {
                     updateAllThreatLabels();
                 } else if (typeof updateColorNameLabel === 'function') {
@@ -71,20 +66,25 @@ window.mapQuantityToPeople = (qty) => {
                     updateCartThreatLabels();
                 }
                 if (typeof showToast === 'function') {
-                    showToast(window.showThreatLevels ? 'Níveis de ameaça ativados' : 'Modo padrão ativado');
+                    showToast('Níveis de ameaça ativados');
                 }
-            }, PRESS_DURATION);
+            }
         };
 
-        const cancelPress = () => {
-            if (longPressTimer) {
-                clearTimeout(longPressTimer);
-                longPressTimer = null;
-            }
+        const handleLogoDblClick = (e) => {
+            e.preventDefault();
+            activateThreatLevels('clique duplo', false);
+        };
 
-            if (window.showThreatLevels === true) {
+        const handleLogoClick = (e) => {
+            e.preventDefault();
+            if (ignoreNextClick) {
+                ignoreNextClick = false;
+                return;
+            }
+            if (window.showThreatLevels) {
                 window.showThreatLevels = false;
-                console.log(`[TCC Esteganografia] Modo de Níveis de Ameaça desativado (logo solta)`);
+                console.log(`[TCC Esteganografia] Modo de Níveis de Ameaça desativado via clique simples`);
                 if (typeof updateAllThreatLabels === 'function') {
                     updateAllThreatLabels();
                 } else if (typeof updateColorNameLabel === 'function') {
@@ -99,7 +99,49 @@ window.mapQuantityToPeople = (qty) => {
             }
         };
 
+        const startPress = (e) => {
+            if (e && e.type === 'touchstart') {
+                e.preventDefault();
+            }
+            if (longPressTimer) {
+                clearTimeout(longPressTimer);
+            }
+            longPressTimer = setTimeout(() => {
+                activateThreatLevels('pressionamento longo (4s)', true);
+                ignoreNextClick = true;
+            }, PRESS_DURATION);
+        };
+
+        const cancelPress = () => {
+            if (longPressTimer) {
+                clearTimeout(longPressTimer);
+                longPressTimer = null;
+            }
+            if (isActiveFromLongPress) {
+                isActiveFromLongPress = false;
+                ignoreNextClick = true;
+                if (window.showThreatLevels) {
+                    window.showThreatLevels = false;
+                    console.log(`[TCC Esteganografia] Modo de Níveis de Ameaça desativado via soltura do longpress`);
+                    if (typeof updateAllThreatLabels === 'function') {
+                        updateAllThreatLabels();
+                    } else if (typeof updateColorNameLabel === 'function') {
+                        updateColorNameLabel();
+                    }
+                    if (typeof updateCartThreatLabels === 'function') {
+                        updateCartThreatLabels();
+                    }
+                    if (typeof showToast === 'function') {
+                        showToast('Modo padrão ativado');
+                    }
+                }
+            }
+        };
+
         logoElements.forEach(logoElement => {
+            logoElement.addEventListener('click', handleLogoClick);
+            logoElement.addEventListener('dblclick', handleLogoDblClick);
+
             logoElement.addEventListener('mousedown', startPress);
             logoElement.addEventListener('mouseup', cancelPress);
             logoElement.addEventListener('mouseleave', cancelPress);

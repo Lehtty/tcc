@@ -30,7 +30,9 @@ O sistema opera em duas camadas paralelas:
 
 ### 1. Esteganografia Comportamental
 Os dados de denúncia e pedidos de socorro são codificados e mapeados a partir de escolhas rotineiras na loja virtual:
-* **Gatilho de Níveis de Ameaça:** Ao manter pressionado o clique/toque sobre a logotipo principal (`MODE`<span>`XA`</span>) por **4 segundos**, o sistema ativa/desativa internamente a exibição esteganográfica do mapeamento de risco no seletor de cores da página de produtos.
+* **Gatilho de Níveis de Ameaça:** Suporta dois métodos:
+    1. **Duplo Clique**: Dê um duplo clique no logotipo principal (`MODE`<span>`XA`</span>) para ativar a exibição esteganográfica persistentemente. Para desativar, dê um único clique no logotipo.
+    2. **Pressionamento Longo (4s)**: Toque ou clique e mantenha pressionado o logotipo por 4 segundos para ativar os níveis de ameaça temporariamente. O modo será desativado automaticamente assim que você soltar o clique/toque.
 * **Mapeamento de Atributos do Carrinho:** O fechamento e envio da denúncia é disparado silenciosamente ao clicar em **"Finalizar Compra"** no carrinho de compras. Os dados transmitidos são baseados no último produto inserido:
   * **Cor do Produto (Nível de Risco/Presença de Armas):**
     * `#2c2c2a` (Preto) ➔ Nível Vermelho (Risco Extremo - Presença de Armas de Fogo no Local)
@@ -78,8 +80,9 @@ Os dados de denúncia e pedidos de socorro são codificados e mapeados a partir 
 ## 🚀 Como Executar e Testar o Protótipo
 1. Abra o arquivo [public/index.html](public/index.html) em um navegador web.
 2. Navegue pelos produtos do catálogo ou clique em um deles para visualizar seus detalhes.
-3. Para ativar a exibição dos níveis de ameaça (esteganografia reversa nas cores):
-   * Clique e segure a logo **MODEXA** no cabeçalho por 4 segundos. Um aviso visual surgirá na tela e, na página do produto, o nome das cores exibirá os níveis de risco (ex: "Nível Vermelho (Risco Extremo)").
+3. Para ativar a exibição dos níveis de ameaça (esteganografia reversa nas cores), você pode:
+   * **Opção 1**: Dar um duplo clique na logo **MODEXA** no cabeçalho. O aviso visual surgirá na tela e as opções de cores exibirão os níveis de risco. Para desativar, clique uma vez na logo.
+   * **Opção 2**: Clicar e segurar a logo **MODEXA** por 4 segundos. Os níveis de ameaça ficarão visíveis e serão desativados assim que você soltar a logo.
 4. Fluxo de envio de denúncia cifrada:
    * Escolha as opções de cor, tamanho e quantidade do produto para representar a sua situação de perigo.
    * Adicione o item ao carrinho e clique em **"Finalizar Compra"**.

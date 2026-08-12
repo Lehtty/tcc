@@ -201,18 +201,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCart();
     }
     initCarousel();
-    const logos = document.querySelectorAll('.logo');
-    logos.forEach(logo => {
-        logo.addEventListener('click', (e) => {
-            e.preventDefault();
-        });
-        logo.addEventListener('dblclick', (e) => {
-            e.preventDefault();
-            sessionStorage.removeItem('selectedCss');
-            sessionStorage.removeItem('selectedThemeIndex');
-            window.location.reload();
-        });
-    });
 });
 
 applyRandomTheme();
