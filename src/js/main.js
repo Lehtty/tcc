@@ -4,7 +4,7 @@ function applyRandomTheme() {
         '../src/assets/styles/style_two.css',
         '../src/assets/styles/style_three.css'
     ];
-    
+
     let isReload = false;
     if (window.performance && window.performance.getEntriesByType) {
         const navEntries = window.performance.getEntriesByType('navigation');
@@ -22,20 +22,20 @@ function applyRandomTheme() {
     let themeIndex = sessionStorage.getItem('selectedThemeIndex');
 
     const themes = [
-        { 
+        {
             name: 'Classic Rose',
             colors: { rose: '#c4705a', cream: '#faf9f6', black: '#111' },
             layout: { navHeight: '70px', radius: '4px', ratio: '3/4' }
         },
-        { 
+        {
             name: 'Modern Blue',
             colors: { rose: '#5a82c4', cream: '#f0f5fa', black: '#0a1a2a' },
-            layout: { navHeight: '90px', radius: '24px', ratio: '1/1' } 
+            layout: { navHeight: '90px', radius: '24px', ratio: '1/1' }
         },
-        { 
+        {
             name: 'Minimalist Dark',
             colors: { rose: '#ff4757', cream: '#1a1a1a', black: '#ffffff' },
-            layout: { navHeight: '60px', radius: '0px', ratio: '2/3' } 
+            layout: { navHeight: '60px', radius: '0px', ratio: '2/3' }
         }
     ];
 
@@ -54,7 +54,7 @@ function applyRandomTheme() {
         setTimeout(() => {
             document.body.style.opacity = '1';
         }, 120);
-        themeLink.href = selectedCss + '?v=' + Date.now();
+        themeLink.href = selectedCss;
     } else {
         document.body.style.opacity = '1';
     }
@@ -84,7 +84,7 @@ function renderProducts() {
             <img src="${p.img}" alt="${p.name}">
             <span class="prod-name">${p.name}</span>
             <div class="prod-price">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
-            <button class="btn-primary" style="margin-top:auto; width:100%" onclick="event.stopPropagation(); addToCart(${p.id})">
+            <button class="btn-primary" style="margin-top:10px; width:100%" onclick="event.stopPropagation(); addToCart(${p.id})">
                 Adicionar
             </button>
         </div>
@@ -92,7 +92,7 @@ function renderProducts() {
 }
 
 function goToProductDetail(id) {
-    window.location.href = `product.html?id=${id}`;
+    window.location.replace(`product.html?id=${id}`);
 }
 
 function showToast(msg) {
@@ -109,89 +109,7 @@ function scrollToProducts() {
     if (target) {
         target.scrollIntoView({ behavior: 'smooth' });
     } else {
-        window.location.href = 'products.html';
-    }
-}
-
-function initCarousel() {
-    const track = document.getElementById('carousel-track');
-    if (!track) return;
-    
-    const slides = Array.from(track.children);
-    const indicators = document.querySelectorAll('.carousel-indicators .indicator');
-    const prevBtn = document.querySelector('.carousel-control.prev');
-    const nextBtn = document.querySelector('.carousel-control.next');
-    
-    let currentIndex = 0;
-    let slideInterval;
-    const intervalTime = 5000;
-    
-    function goToSlide(index) {
-        if (index < 0) {
-            index = slides.length - 1;
-        } else if (index >= slides.length) {
-            index = 0;
-        }
-        
-        slides[currentIndex].classList.remove('active');
-        if (indicators.length > currentIndex) {
-            indicators[currentIndex].classList.remove('active');
-        }
-        
-        currentIndex = index;
-        
-        slides[currentIndex].classList.add('active');
-        if (indicators.length > currentIndex) {
-            indicators[currentIndex].classList.add('active');
-        }
-    }
-    
-    function nextSlide() {
-        goToSlide(currentIndex + 1);
-    }
-    
-    function prevSlide() {
-        goToSlide(currentIndex - 1);
-    }
-    
-    function startAutoPlay() {
-        stopAutoPlay();
-        slideInterval = setInterval(nextSlide, intervalTime);
-    }
-    
-    function stopAutoPlay() {
-        if (slideInterval) {
-            clearInterval(slideInterval);
-        }
-    }
-    
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            prevSlide();
-            startAutoPlay();
-        });
-    }
-    
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            nextSlide();
-            startAutoPlay();
-        });
-    }
-    
-    indicators.forEach((indicator, idx) => {
-        indicator.addEventListener('click', () => {
-            goToSlide(idx);
-            startAutoPlay();
-        });
-    });
-    
-    startAutoPlay();
-    
-    const carouselContainer = document.querySelector('.carousel');
-    if (carouselContainer) {
-        carouselContainer.addEventListener('mouseenter', stopAutoPlay);
-        carouselContainer.addEventListener('mouseleave', startAutoPlay);
+        window.location.replace('products.html');
     }
 }
 
@@ -201,12 +119,105 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCart();
     }
     initCarousel();
+    const logos = document.querySelectorAll('.logo');
+    logos.forEach(logo => {
+        logo.addEventListener('click', (e) => {
+            e.preventDefault();
+        });
+        logo.addEventListener('dblclick', (e) => {
+            e.preventDefault();
+            sessionStorage.removeItem('selectedCss');
+            sessionStorage.removeItem('selectedThemeIndex');
+            window.location.reload();
+        });
+    });
 });
+
+function initCarousel() {
+    const slides = document.querySelectorAll('.carousel-slide');
+    if (!slides || slides.length === 0) return;
+    
+    const indicators = document.querySelectorAll('.indicator');
+    const prevBtn = document.querySelector('.carousel-control.prev');
+    const nextBtn = document.querySelector('.carousel-control.next');
+    
+    let currentIndex = 0;
+    let slideInterval;
+    const intervalTime = 5000;
+
+    function goToSlide(index) {
+        if (index < 0) {
+            index = slides.length - 1;
+        } else if (index >= slides.length) {
+            index = 0;
+        }
+
+        slides[currentIndex].classList.remove('active');
+        if (indicators.length > currentIndex) {
+            indicators[currentIndex].classList.remove('active');
+        }
+
+        currentIndex = index;
+
+        slides[currentIndex].classList.add('active');
+        if (indicators.length > currentIndex) {
+            indicators[currentIndex].classList.add('active');
+        }
+    }
+
+    function nextSlide() {
+        goToSlide(currentIndex + 1);
+    }
+
+    function prevSlide() {
+        goToSlide(currentIndex - 1);
+    }
+
+    function startAutoPlay() {
+        stopAutoPlay();
+        slideInterval = setInterval(nextSlide, intervalTime);
+    }
+
+    function stopAutoPlay() {
+        if (slideInterval) {
+            clearInterval(slideInterval);
+        }
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            startAutoPlay();
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            startAutoPlay();
+        });
+    }
+
+    indicators.forEach((indicator, idx) => {
+        indicator.addEventListener('click', () => {
+            goToSlide(idx);
+            startAutoPlay();
+        });
+    });
+
+    startAutoPlay();
+
+    const carouselContainer = document.querySelector('.carousel');
+    if (carouselContainer) {
+        carouselContainer.addEventListener('mouseenter', stopAutoPlay);
+        carouselContainer.addEventListener('mouseleave', startAutoPlay);
+    }
+}
 
 applyRandomTheme();
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('../sw.js').catch(() => {});
+        navigator.serviceWorker.register('../sw.js').catch(() => { });
     });
 }

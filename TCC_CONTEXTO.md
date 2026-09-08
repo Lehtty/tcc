@@ -3,7 +3,7 @@
 ## 1. Identificação Acadêmica e Tema
 
 * **Instituição:** Centro Universitário Barriga Verde – UNIBAVE
-* **Curso:** Sistemas de Informação (7ª Fase)
+* **Curso:** Sistemas de Informação (8ª Fase)
 * **Disciplina:** Desenvolvimento de Protótipo
 * **Orientador:** Prof. Ricardo A. Vargas Barbosa
 * **Título do Trabalho:** *Desenvolvimento de Plataforma E-commerce Camuflada com Esteganografia Comportamental e Protocolos Anti-forense para Denúncia de Violência Doméstica*
