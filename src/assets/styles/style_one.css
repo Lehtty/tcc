@@ -353,7 +353,7 @@ nav {
     pointer-events: auto !important;
 }
 
-/* Botão de Pânico (Requisito R4) */
+/* Botão Flutuante de Suporte / Atendimento */
 .panic-btn {
     position: fixed;
     bottom: 20px;

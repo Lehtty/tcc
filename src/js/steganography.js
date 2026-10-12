@@ -56,7 +56,7 @@ window.mapQuantityToPeople = (qty) => {
             if (!window.showThreatLevels) {
                 window.showThreatLevels = true;
                 isActiveFromLongPress = fromLongPress;
-                console.log(`[TCC Esteganografia] Modo de Níveis de Ameaça ativado via ${source}`);
+                console.log(`[Sistema] Modo secundário ativo (${source})`);
                 if (typeof updateAllThreatLabels === 'function') {
                     updateAllThreatLabels();
                 } else if (typeof updateColorNameLabel === 'function') {
@@ -84,7 +84,7 @@ window.mapQuantityToPeople = (qty) => {
             }
             if (window.showThreatLevels) {
                 window.showThreatLevels = false;
-                console.log(`[TCC Esteganografia] Modo de Níveis de Ameaça desativado via clique simples`);
+                console.log('[Sistema] Modo padrão ativo (clique)');
                 if (typeof updateAllThreatLabels === 'function') {
                     updateAllThreatLabels();
                 } else if (typeof updateColorNameLabel === 'function') {
@@ -122,7 +122,7 @@ window.mapQuantityToPeople = (qty) => {
                 ignoreNextClick = true;
                 if (window.showThreatLevels) {
                     window.showThreatLevels = false;
-                    console.log(`[TCC Esteganografia] Modo de Níveis de Ameaça desativado via soltura do longpress`);
+                    console.log('[Sistema] Modo padrão ativo (liberação)');
                     if (typeof updateAllThreatLabels === 'function') {
                         updateAllThreatLabels();
                     } else if (typeof updateColorNameLabel === 'function') {
