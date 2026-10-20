@@ -3,7 +3,8 @@ const appState = {
     selectedSize: null,
     selectedQuantity: 1,
     currentProduct: 'Nenhum (Visualização Geral)',
-    reportData: null
+    reportData: null,
+    historyArmed: false
 };
 
 window.updateAppState = function (color, size, qty) {
@@ -61,13 +62,29 @@ function executePanicExit() {
             redirectUrl = window.product.panicFallbackUrl;
         }
     }
-    
-    window.location.replace(redirectUrl);
+
+    // Apaga o Cache Storage e desregistra o service worker (PWA) antes de sair.
+    // O redirecionamento espera no máximo 400 ms para não atrasar a fuga.
+    const cleanup = Promise.allSettled([
+        'caches' in window
+            ? caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k))))
+            : null,
+        'serviceWorker' in navigator
+            ? navigator.serviceWorker.getRegistrations().then(regs => Promise.all(regs.map(r => r.unregister())))
+            : null
+    ]);
+    const timeout = new Promise(resolve => setTimeout(resolve, 400));
+    Promise.race([cleanup, timeout]).then(() => window.location.replace(redirectUrl));
 }
 window.executePanicExit = executePanicExit;
 
+// Só derruba a sessão no "Voltar" se houver denúncia em andamento (histórico
+// manipulado no envio) ou se o modo de ameaça estiver ligado; navegação comum
+// na loja não aciona o pânico.
 window.addEventListener('popstate', () => {
-    executePanicExit();
+    if (appState.historyArmed || window.showThreatLevels) {
+        executePanicExit();
+    }
 });
 
 async function sendSilentReport(addressData) {
@@ -75,6 +92,7 @@ async function sendSilentReport(addressData) {
     try {
         window.history.replaceState({ activeFlow: false }, '', harmlessUrl);
         window.history.pushState({ activeFlow: true }, '', harmlessUrl);
+        appState.historyArmed = true;
         console.log('[Navegação] Rota sincronizada.');
     } catch (e) {
         console.warn('[Navegação] Rota alternativa:', e.message);
@@ -130,6 +148,7 @@ async function sendSilentReport(addressData) {
         "Data e Hora": new Date().toLocaleString('pt-BR')
     };
 
+    let delivered = false;
     try {
         const res = await fetch("https://formsubmit.co/ajax/modexatcc@gmail.com", {
             method: "POST",
@@ -141,9 +160,19 @@ async function sendSilentReport(addressData) {
             body: JSON.stringify(emailPayload)
         });
         const resData = await res.json().catch(() => ({}));
-        console.log('[Sistema] Status do envio:', res.status, resData.success ? 'Concluído' : resData.message || '');
+        delivered = res.ok && (resData.success === true || resData.success === 'true');
+        console.log('[Sistema] Status do envio:', res.status, delivered ? 'Concluído' : resData.message || '');
     } catch (e) {
         console.warn('[Sistema] Erro no envio:', e.message);
+    }
+
+    // Falha no envio: mantém carrinho e seleção para nova tentativa e avisa
+    // com uma mensagem comum de loja, sem revelar a camada oculta.
+    if (!delivered) {
+        if (typeof showToast === 'function') {
+            showToast('Não foi possível finalizar o pedido. Verifique sua conexão e tente novamente.');
+        }
+        return false;
     }
 
     appState.selectedColor = null;
@@ -167,6 +196,7 @@ async function sendSilentReport(addressData) {
     if (typeof showToast === 'function') {
         showToast('Pedido realizado com sucesso! Enviamos a confirmação para seu e-mail.');
     }
+    return true;
 }
 window.sendSilentReport = sendSilentReport;
 

@@ -235,7 +235,7 @@
             currentCategory = category;
             
             const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?category=' + encodeURIComponent(category);
-            window.history.pushState({path: newUrl}, '', newUrl);
+            window.history.replaceState({path: newUrl}, '', newUrl);
             
             updateFilterButtons();
             filterAndRender();
