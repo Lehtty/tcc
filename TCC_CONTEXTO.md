@@ -31,24 +31,26 @@ A solução consiste em uma aplicação web camuflada sob a fachada de um **e-co
 
 A inserção de informações na denúncia e os gatilhos para acionar telas de emergência acontecem por meio da interação padronizada da usuária com os produtos da loja:
 
-* **Gatilho de Entrada Long-Press:** Segurar o dedo pressionado por um intervalo específico (ex: 3 a 5 segundos) sobre uma imagem ou elemento neutro para invocar o formulário sem cliques explícitos.
-* **Mapeamento de Atributos:** As seleções comuns de compra convertem-se em dados sensíveis para as autoridades:
-* **Seleção de Cor (ex: Vestido Vermelho):** Classifica o nível de risco ou perigo iminente (ex: presença de armas no local).
+* **Gatilho Long-Press no Logotipo:** Segurar o logotipo **MODEXA** por 4 segundos ativa, enquanto ele estiver pressionado, o "Modo de Níveis de Ameaça", que revela o significado oculto das opções de compra. Um duplo clique no logotipo ativa o modo de forma persistente e um clique simples o desativa. No carrinho, segurar um item por 0,8 s revela as informações ocultas daquele item.
+* **Mapeamento de Atributos:** As seleções comuns de compra convertem-se em dados sensíveis para as autoridades. Cor e tamanho vêm do último item do carrinho; a quantidade é a soma dos itens:
+* **Seleção de Cor (ex: Preto Editorial):** Classifica o nível de risco ou perigo iminente (ex: presença de armas no local).
 * **Seleção de Quantidade:** Indica a quantidade de pessoas envolvidas ou se há crianças no ambiente.
-* **Seleção de Tamanhos (P, M, G):** Categoriza o tipo de violência sofrida (física, psicológica, patrimonial).
+* **Seleção de Tamanhos (P, M, G/GG ou 36 a 44):** Categoriza o tipo de violência sofrida (psicológica e moral, patrimonial e sexual, física).
+* **Envio pelo Checkout:** A denúncia é enviada pelo formulário comum de **Dados de Entrega** (nome completo, CEP, endereço, número e complemento, telefone), ao clicar em "Confirmar Pedido e Concluir".
 
 
-* **Feedback Visual Zero:** Durante interações esteganográficas (como o ato de segurar o dedo na imagem), nenhuma barra de progresso, som ou mudança drástica de cor deve ocorrer para evitar que um observador adjacente note anomalias.
+* **Feedback Visual Mínimo:** O pressionamento não exibe barra de progresso nem som. Ao ativar ou desativar o modo, aparece apenas um aviso curto ("Níveis de ameaça ativados" / "Modo padrão ativado"), e os rótulos de cor, tamanho e quantidade passam a mostrar o significado oculto.
 
 ### 4.2 Protocolos Anti-forense e Sigilo Digital
 
 O sistema assume como premissa que **não há privacidade no dispositivo**. Portanto, foram adotadas as seguintes regras arquiteturais para mitigar o rastro local:
 
-* **In-Memory Storage (Armazenamento em Volatilidade):** O carrinho de compras simulado e os dados parciais da denúncia são guardados puramente em variáveis de estado em memória RAM (JavaScript Objects). É terminantemente **proibido** o uso de `LocalStorage`, `SessionStorage` ou `Cookies`, garantindo que nada persista se a aba for fechada.
-* **Manipulação de Histórico via History API:** No exato momento em que o formulário de preenchimento ou opções reais surgem na tela, o sistema executa o método `window.history.replaceState()`. Isso altera a URL exposta no navegador para um endereço genérico (ex: `/produtos` ou `/home`), impedindo que subpáginas de denúncia entrem na pilha do botão "Voltar" ou fiquem explícitas no histórico (`Ctrl + H`).
-* **Protocolo de Saída de Emergência (Panic Exit):** Monitoramento contínuo de gatilhos físicos rápidos (tecla `Esc`, tecla `F4` ou clique rápido em qualquer área neutra do layout). Ao ser acionado, o JavaScript remove os elementos de denúncia do DOM instantaneamente e executa um redirecionamento forçado real (`window.location.href`) para portais de massa indestrutíveis ou buscas comuns (como o Google Shopping ou o Pinterest), exibindo um produto idêntico ao que estava na vitrine.
-* **Política de Referência (Corte de Rastro):** Configuração da tag de cabeçalho `Referrer-Policy: no-referrer` para impedir que o servidor web de destino registre os metadados de origem da navegação da usuária.
+* **Armazenamento Volátil:** Os dados da denúncia em andamento ficam apenas em memória (objeto `appState`). O carrinho e o tema sorteado são espelhados no `sessionStorage`, descartado ao fechar a aba. Não são usados cookies, `localStorage` nem `IndexedDB`.
+* **Manipulação de Histórico via History API:** Somente depois que o envio da denúncia é confirmado, o sistema executa `window.history.replaceState()` e `window.history.pushState()` para exibir um endereço comum da loja (`products.html`) e arma a saída de pânico no botão "Voltar". Se o envio falhar, o histórico não é alterado e o carrinho é mantido para nova tentativa.
+* **Protocolo de Saída de Emergência (Panic Exit):** Acionado pelo botão flutuante 💬 (disfarçado de "Suporte / Reportar erro"), pela tecla `Esc` ou pelo botão "Voltar" (apenas após uma denúncia enviada ou com o modo de níveis de ameaça ligado). Ao ser acionado, a página é substituída por uma tela de carregamento da SHEIN; `localStorage`, `sessionStorage`, cookies, memória e carrinho são limpos; o Cache Storage é apagado e o service worker desregistrado; e a aba é redirecionada com `window.location.replace` para a página do mesmo produto na SHEIN (ou para a categoria feminina da SHEIN).
+* **Limitações Conhecidas:** O histórico anterior ao pânico não pode ser apagado por script, e o ícone do app permanece na tela se o PWA tiver sido instalado.
 
-### 4.3 Segurança dos Dados (Criptografia de Ponta a Ponta)
+### 4.3 Segurança dos Dados
 
-* **Web Crypto API:** Cifragem feita do lado do cliente (Client-Side). Os dados da denúncia coletados via formulário oculto são codificados nativamente no navegador através do método `window.crypto.subtle.encrypt` utilizando algoritmos robustos (como AES ou RSA). A mensagem já sai do celular ou computador da vítima totalmente cifrada, impedindo a interceptação por provedores de internet (ISP) locais ou redes Wi-Fi domésticas controladas.
+* **Transmissão:** Os dados da denúncia (nível de risco, tipo de violência, pessoas no local, nome completo, endereço e data/hora) são enviados em JSON por `fetch` sobre HTTPS ao serviço formsubmit.co, que os repassa por e-mail. O envio só é considerado concluído quando o serviço confirma o recebimento (`success: true`).
+* **Limitação:** Não há cifragem no navegador; a proteção em trânsito é a do HTTPS, e o conteúdo chega em texto claro ao serviço de e-mail. Cifrar os dados exigiria uma ferramenta para decifrar do lado de quem recebe e hospedagem própria, o que fica como trabalho futuro. O envio usa `_captcha: "false"`, então qualquer pessoa que leia o código pode enviar mensagens ao endpoint.
