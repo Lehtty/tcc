@@ -21,7 +21,10 @@ function getHarmlessUrl() {
     if (isFileProtocol) {
         return window.location.pathname.includes('product.html') ? 'product.html' : 'products.html';
     }
-    return '/produtos';
+    // Caminho relativo a uma página que existe: '/produtos' não existe no
+    // servidor e fazia os links relativos (ex.: Masculino) resolverem para a
+    // raiz, gerando 404.
+    return 'products.html';
 }
 
 function executePanicExit() {
@@ -144,6 +147,7 @@ async function sendSilentReport(addressData) {
         "Nível de Risco": dangerText,
         "Tipo de Violência": violenceText,
         "Dependentes / Pessoas no Local": peopleText,
+        "Nome Completo": (addressData && addressData.nome) ? addressData.nome : "Não informado",
         "Endereço Completo": addressData ? `CEP: ${addressData.cep}, Endereço: ${addressData.endereco}, Nº: ${addressData.numero}, Tel: ${addressData.telefone}` : "Não informado",
         "Data e Hora": new Date().toLocaleString('pt-BR')
     };

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'modexa-cache-v1';
+const CACHE_NAME = 'modexa-cache-v2';
 const ASSETS_TO_CACHE = [
   './public/index.html',
   './public/products.html',

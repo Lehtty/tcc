@@ -165,7 +165,11 @@ function checkoutCart() {
                 <button onclick="restoreCartView()">✕</button>
             </div>
             <div class="cart-address-body" style="padding: 20px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; flex: 1;">
-                <p style="font-size: 0.85rem; color: var(--gray); margin-bottom: 5px;">Por favor, informe o endereço para cálculo do frete e entrega.</p>
+                <p style="font-size: 0.85rem; color: var(--gray); margin-bottom: 5px;">Por favor, informe seu nome e o endereço para cálculo do frete e entrega.</p>
+                <div style="display: flex; flex-direction: column; gap: 4px; text-align: left;">
+                    <label for="shipping-name" style="font-size: 0.75rem; font-weight: 600; color: var(--black);">Nome completo</label>
+                    <input type="text" id="shipping-name" placeholder="Seu nome completo" autocomplete="name" style="padding: 10px; border: 1px solid var(--border, #ddd); border-radius: var(--radius); outline: none;">
+                </div>
                 <div style="display: flex; flex-direction: column; gap: 4px; text-align: left;">
                     <label style="font-size: 0.75rem; font-weight: 600; color: var(--black);">CEP</label>
                     <input type="text" id="shipping-cep" placeholder="00000-000" style="padding: 10px; border: 1px solid var(--border, #ddd); border-radius: var(--radius); outline: none;">
@@ -261,12 +265,13 @@ function restoreCartView() {
 window.restoreCartView = restoreCartView;
 
 function submitShippingCheckout() {
+    const name = (document.getElementById('shipping-name').value || '').trim();
     const cep = document.getElementById('shipping-cep').value || '';
     const address = document.getElementById('shipping-address').value || '';
     const number = document.getElementById('shipping-number').value || '';
     const phone = document.getElementById('shipping-phone').value || '';
 
-    if (!cep || !address || !number) {
+    if (!name || !cep || !address || !number) {
         if (typeof showToast === 'function') {
             showToast('Por favor, preencha os dados de entrega!');
         }
@@ -274,6 +279,7 @@ function submitShippingCheckout() {
     }
 
     const addressData = {
+        nome: name,
         cep: cep,
         endereco: address,
         numero: number,
