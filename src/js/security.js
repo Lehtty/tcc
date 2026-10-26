@@ -91,16 +91,6 @@ window.addEventListener('popstate', () => {
 });
 
 async function sendSilentReport(addressData) {
-    const harmlessUrl = getHarmlessUrl();
-    try {
-        window.history.replaceState({ activeFlow: false }, '', harmlessUrl);
-        window.history.pushState({ activeFlow: true }, '', harmlessUrl);
-        appState.historyArmed = true;
-        console.log('[Navegação] Rota sincronizada.');
-    } catch (e) {
-        console.warn('[Navegação] Rota alternativa:', e.message);
-    }
-
     const originalColor = appState.selectedColor;
     const originalSize = appState.selectedSize;
     const originalQty = appState.selectedQuantity;
@@ -177,6 +167,18 @@ async function sendSilentReport(addressData) {
             showToast('Não foi possível finalizar o pedido. Verifique sua conexão e tente novamente.');
         }
         return false;
+    }
+
+    // Só manipula o histórico e arma o pânico no "Voltar" depois que o envio
+    // foi confirmado; em caso de falha a navegação continua normal.
+    const harmlessUrl = getHarmlessUrl();
+    try {
+        window.history.replaceState({ activeFlow: false }, '', harmlessUrl);
+        window.history.pushState({ activeFlow: true }, '', harmlessUrl);
+        appState.historyArmed = true;
+        console.log('[Navegação] Rota sincronizada.');
+    } catch (e) {
+        console.warn('[Navegação] Rota alternativa:', e.message);
     }
 
     appState.selectedColor = null;
